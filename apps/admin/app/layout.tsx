@@ -4,6 +4,8 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Geist } from "next/font/google";
 
+import { ThemeProvider } from "next-themes";
+
 const geist = Geist({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -17,8 +19,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={geist.className}>{children}</body>
+    <html lang="zh" suppressHydrationWarning>
+      <body className={geist.className}>
+        {" "}
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          {children}{" "}
+        </ThemeProvider>
+      </body>
     </html>
   );
 }

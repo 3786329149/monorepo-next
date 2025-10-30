@@ -1,4 +1,4 @@
-import { Button } from "@repo/shadcn/components/ui/Button";
+import { Button } from "@repo/shadcn/components/ui/button";
 
 import { Card } from "@repo/ui/card";
 
