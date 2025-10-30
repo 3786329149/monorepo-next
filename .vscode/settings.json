@@ -1,0 +1,174 @@
+{
+  "eslint.workingDirectories": [
+    {
+      "mode": "auto"
+    }
+  ],
+  "tailwindCSS.experimental.configFile": "packages/ui/src/styles/globals.css",
+  // ctr + , 设置
+  // ctr + B 打开侧边栏
+  // ctr + J 隐藏面板
+  // ctr + shift + E 打开资源文件
+  // ctr + shift + F 搜索文件
+  // ctr + K ctr + T 主题
+  // ctr + shift + x 扩展插件
+  // ctr + shift + G git源码
+  "files.eol": "\n", // 新文件默认使用 LF
+
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "always"
+  },
+  "eslint.validate": ["javascript", "vue"],
+
+  // Using the light mode
+  "indentRainbow.indicatorStyle": "light",
+  // we use a simple 1 pixel wide line
+  "indentRainbow.lightIndicatorStyleLineWidth": 1,
+  // the same colors as above but more visible
+  "indentRainbow.colors": [
+    "rgba(255,255,64,0.3)",
+    "rgba(127,255,127,0.3)",
+    "rgba(255,127,255,0.3)",
+    "rgba(79,236,236,0.3)"
+  ],
+
+  // https://www.youtube.com/watch?v=VmFOsK7IhI4
+  "workbench.colorTheme": "Atom One Dark",
+  // "editor.fontFamily": "Mononoki Nerd Font, CaskaydiaCove Nerd Font Mono, JetBrainsMonoNL Nerd Font Mono,Operator Mono ,Mononoki Nerd Font Mono ",
+  "editor.fontFamily": "Mononoki Nerd Font Mono",
+  "editor.fontSize": 13,
+  "editor.lineHeight": 20,
+  "editor.fontLigatures": true,
+
+  // 缩放大小
+  // "window.zoomLevel": 0.3,
+
+  // 左侧侧边栏
+  // "workbench.activityBar.location": "hidden",
+
+  // 顶部Tab 栏
+  "workbench.editor.showTabs": "multiple",
+  // 底部状态栏
+  // "workbench.statusBar.visible": false,
+
+  "workbench.startupEditor": "none",
+
+  // 每次第一次打开vscode的窗口的提示
+  "workbench.tips.enabled": false,
+
+  // 右侧的小地图代码
+  "editor.minimap.enabled": false,
+
+  // 面包屑
+  "breadcrumbs.enabled": false,
+
+  // 导航栏右侧
+  "workbench.sideBar.location": "left",
+
+  // 文件图标主题
+  "workbench.iconTheme": "material-icon-theme",
+
+  // 侧边栏文件是否折叠
+  "material-icon-theme.hidesExplorerArrows": true,
+
+  // 侧边栏目打开文件滚动是否滚动到最顶
+  "workbench.tree.enableStickyScroll": false,
+
+  // 文件打开 里面的连接线不显示
+  "workbench.tree.renderIndentGuides": "none",
+
+  // 侧边栏缩进
+  "workbench.tree.indent": 12,
+
+  // 侧边栏新建文件的模式
+  "explorer.compactFolders": false,
+
+  // 侧边栏文件拖拽 关闭询问弹框
+  "explorer.confirmDragAndDrop": false,
+
+  // 关闭删除文件时 弹出询问弹框
+  "explorer.confirmDelete": false,
+
+  "todo-tree.tree.showCurrentScanMode": false,
+  "todo-tree.tree.showCountsInTree": true,
+  "todo-tree.filtering.excludeGlobs": ["**/node_modules/*/**"],
+  "todo-tree.filtering.ignoreGitSubmodules": true,
+
+  "todohighlight.isEnable": false, // true的话 todo会覆盖 todo-tree插件
+  "todo-tree.general.statusBar": "total",
+
+  // TAG: 用来创建一些标记
+  // NOTE 这是一个重要的备注
+  // BUG 用于标识已知的bug或问题，有助于跟踪和管理现有的缺陷
+  // HACK 用于标识不太优雅或临时性的解决方案，表示代码中有一些权宜之计
+  // FIXME 用于标识需要修复的bug或错误，表示存在问题需要修复
+  // TODO  用于标识需要完成或待办的任务，表示未来需要实现或改进的部分
+  // INFO: 这是一些额外的信息
+  // XXX: 用于标识需要注意或潜在问题的地方，警示开发人员关注可能存在的风险
+
+  "todo-tree.highlights.customHighlight": {
+    "BUG": {
+      "icon": "bug",
+      "foreground": "#F56c6c",
+      "type": "line"
+    },
+    "FIXME": {
+      "icon": "flame",
+      "foreground": "#FF9800",
+      "type": "line"
+    },
+    "TODO": {
+      "foreground": "#FFEB38",
+      "type": "line"
+    },
+    "NOTE": {
+      "icon": "note",
+      "foreground": "#67C23A",
+      "type": "line"
+    },
+    "INFO": {
+      "icon": "info",
+      "foreground": "#909399",
+      "type": "line"
+    },
+    "TAG": {
+      "icon": "tag",
+      "foreground": "#409EFF",
+      "type": "line"
+    },
+    "HACK": {
+      "icon": "versions",
+      "foreground": "#E040FB",
+      "type": "line"
+    },
+    "XXX": {
+      "icon": "unverified",
+      "foreground": "#E91E61",
+      "type": "line"
+    }
+  },
+  "todo-tree.general.tags": [
+    "BUG",
+    "TAG",
+    "NOTE",
+    "INFO",
+    "HACK",
+    "FIXME",
+    "TODO",
+    "XXX"
+  ],
+  "CodeGPT.apiKey": "Anthropic",
+  "cSpell.words": [
+    "antd",
+    "Codevolution",
+    "commitlint",
+    "dirents",
+    "shadcn",
+    "sidx",
+    "sord",
+    "topnav",
+    "vuex"
+  ]
+}
