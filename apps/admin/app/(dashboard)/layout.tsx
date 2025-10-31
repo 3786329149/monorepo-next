@@ -1,23 +1,23 @@
-import { Sidebar } from "../../components/layout/Sidebar";
-import { Topbar } from "../../components/layout/Topbar";
+"use client";
+
+import { useLayoutStore } from "#/store/useLayoutStore";
+import LayoutSide from "#/components/layout/layout-side";
+import LayoutTop from "#/components/layout/layout-top";
+import LayoutMix from "#/components/layout/layout-mix";
 
 export default function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return (
-    <div className="flex min-h-screen bg-background text-foreground">
-      {/* Desktop Sidebar */}
-      <div className="hidden md:block fixed inset-y-0 left-0 w-64">
-        <Sidebar />
-      </div>
+  const layout = useLayoutStore((s) => s.layout);
 
-      {/* Right Content */}
-      <div className="flex flex-col flex-1 md:ml-64">
-        <Topbar />
-        <main className="p-6 flex-1">{children}</main>
-      </div>
-    </div>
-  );
+  switch (layout) {
+    case "top":
+      return <LayoutTop>{children}</LayoutTop>;
+    case "mix":
+      return <LayoutMix>{children}</LayoutMix>;
+    default:
+      return <LayoutSide>{children}</LayoutSide>;
+  }
 }

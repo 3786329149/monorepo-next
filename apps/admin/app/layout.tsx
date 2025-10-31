@@ -4,7 +4,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Geist } from "next/font/google";
 
-import { ThemeProvider } from "next-themes";
+import ThemeWatcher from "#/provider/theme-providers";
 
 const geist = Geist({ subsets: ["latin"] });
 
@@ -21,10 +21,7 @@ export default function RootLayout({
   return (
     <html lang="zh" suppressHydrationWarning>
       <body className={geist.className}>
-        {" "}
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          {children}{" "}
-        </ThemeProvider>
+        <ThemeWatcher>{children} </ThemeWatcher>
       </body>
     </html>
   );
