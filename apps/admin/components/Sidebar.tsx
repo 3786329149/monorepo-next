@@ -1,119 +1,87 @@
 "use client";
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-
-import { menuItems } from "#/mock/menu";
 import { useLayoutStore } from "#/store/useLayoutStore";
-
 import { cn } from "@repo/shadcn/lib/utils";
-// import { ScrollArea } from "@repo/shadcn/components/ui/scroll-area";
+import { Home, Users, Settings } from "lucide-react";
+import Link from "next/link";
 
-export default function Sidebar() {
-  const pathname = usePathname();
-  const { layout, collapsed, toggleCollapse } = useLayoutStore();
+const HEADER_HEIGHT = 56;
+const SIDEBAR_WIDTH = 200;
+const SIDEBAR_COLLAPSED = 64;
 
-  // 在 top 布局下不显示侧边栏
-  if (layout === "top") return null;
+interface SidebarProps {
+  mix?: boolean;
+  // children?: React.ReactNode;
+}
 
-  // 根据布局决定默认展开宽度（你可以自行调整）
-  const expandedWidth = layout === "mix" ? 200 : 240;
-  const collapsedWidth = 72;
+export default function Sidebar({ mix }: SidebarProps) {
+  const { collapsed, mode } = useLayoutStore();
 
-  // return (
-  //   <aside
-  //     className={cn(
-  //       "fixed left-0 top-0 h-full bg-background border-r border-border transition-all duration-300 shadow-sm",
-  //       collapsed ? "w-[64px]" : "w-[240px]"
-  //     )}
-  //   >
-  //     <div className="h-16 flex items-center justify-center font-bold text-xl border-b">
-  //       My Admin
-  //     </div>
-  //     <ScrollArea className="flex-1">
-  //       <nav className="p-4 space-y-1">
-  //         {menuItems.map(({ href, label, icon: Icon }) => (
-  //           <Link
-  //             key={href}
-  //             href={href}
-  //             className={cn(
-  //               "flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
-  //               pathname === href
-  //                 ? "bg-primary text-primary-foreground"
-  //                 : "hover:bg-accent hover:text-accent-foreground"
-  //             )}
-  //           >
-  //             <Icon className="h-4 w-4" />
-  //             {label}
-  //           </Link>
-  //         ))}
-  //       </nav>
-  //     </ScrollArea>
-  //   </aside>
-  // );
+  const menus = mix
+    ? [
+        {
+          key: "overview",
+          label: "Overview",
+          icon: Home,
+          href: "/dashboard/overview",
+        },
+        {
+          key: "reports",
+          label: "Reports",
+          icon: Users,
+          href: "/dashboard/reports",
+        },
+      ]
+    : [
+        {
+          key: "dashboard",
+          label: "Dashboard",
+          icon: Home,
+          href: "/dashboard",
+        },
+        { key: "users", label: "Users", icon: Users, href: "/users" },
+        {
+          key: "settings",
+          label: "Settings",
+          icon: Settings,
+          href: "/settings",
+        },
+      ];
+  const base =
+    "fixed left-0 border-r border-border bg-background overflow-hidden transition-[width] duration-300 ease-in-out";
+  const layout = mix
+    ? `top-[${HEADER_HEIGHT}px] h-[calc(100vh-${HEADER_HEIGHT}px)]`
+    : "top-0 h-screen";
+  const width = collapsed
+    ? `w-[${SIDEBAR_COLLAPSED}px]`
+    : `w-[${SIDEBAR_WIDTH}px]`;
 
   return (
-    <aside
-      aria-label="sidebar"
-      className={cn(
-        "fixed left-0 top-0 h-screen bg-background border-r border-border transition-all duration-300 flex flex-col z-40",
-        collapsed ? `w-[${collapsedWidth}px]` : `w-[${expandedWidth}px]`
+    <aside className={cn(base, layout, width)}>
+      {mode === "side" && (
+        <div className="h-[56px] flex items-center justify-center border-b border-border">
+          {collapsed ? "🌀" : "My Admin"}
+        </div>
       )}
-      style={{
-        width: collapsed ? `${collapsedWidth}px` : `${expandedWidth}px`,
-      }}
-    >
-      {/* header: logo + collapse button */}
-      <div className="flex items-center justify-between h-14 px-3 border-b">
-        {!collapsed ? (
-          <div className="text-lg font-semibold">Admin</div>
-        ) : (
-          <div className="text-lg font-semibold">A</div>
-        )}
 
-        <button
-          aria-label="toggle-collapse"
-          onClick={toggleCollapse}
-          className="p-1 rounded hover:bg-muted transition"
-        >
-          {collapsed ? (
-            <ChevronRight className="w-4 h-4" />
-          ) : (
-            <ChevronLeft className="w-4 h-4" />
-          )}
-        </button>
-      </div>
-
-      {/* nav */}
-      <nav className="flex-1 overflow-auto px-2 py-4 space-y-1">
-        {menuItems.map((item) => {
-          const active = pathname === item.href;
+      <nav className="flex flex-col p-2">
+        {menus.map((item) => {
+          const Icon = item.icon;
           return (
             <Link
-              key={item.href}
+              key={item.key}
               href={item.href}
               className={cn(
-                "flex items-center gap-3 px-3 py-2 rounded hover:bg-accent transition-colors",
-                active
-                  ? "bg-primary text-primary-foreground"
-                  : "text-foreground"
+                "flex items-center rounded-md px-3 py-2 text-sm hover:bg-muted transition-all",
+                collapsed ? "justify-center" : "gap-2"
               )}
-              style={{
-                justifyContent: collapsed ? "center" : "flex-start",
-              }}
             >
-              <item.icon className="w-5 h-5 flex-shrink-0" />
-              {!collapsed && <span className="text-sm">{item.label}</span>}
+              <Icon size={18} />
+              {!collapsed && <span>{item.label}</span>}
             </Link>
           );
         })}
       </nav>
-
-      {/* footer 可放用户信息或版本 */}
-      <div className="h-14 flex items-center justify-center border-t text-xs text-muted-foreground">
-        {!collapsed ? "v1.0.0 • 管理系统" : "v1.0"}
-      </div>
     </aside>
   );
 }

@@ -1,36 +1,26 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-export type LayoutType = "side" | "top" | "mix";
+export type LayoutMode = "side" | "top" | "mix";
 
 interface LayoutState {
-  layout: LayoutType;
+  mode: LayoutMode;
   darkMode: boolean;
-  fixedHeader: boolean;
-  fixedSidebar: boolean;
   collapsed: boolean; // 侧边栏是否收起（对 side / mix 有效）
   toggleCollapse: () => void;
-  setCollapsed: (v: boolean) => void;
-  setLayout: (layout: LayoutType) => void;
+  setMode: (mode: LayoutMode) => void;
   toggleDark: () => void;
-  toggleFixedHeader: () => void;
-  toggleFixedSidebar: () => void;
 }
 
 export const useLayoutStore = create<LayoutState>()(
   persist(
     (set) => ({
-      layout: "side",
+      mode: "side",
       collapsed: false,
       darkMode: false,
-      fixedHeader: true,
-      fixedSidebar: true,
-      setLayout: (layout) => set({ layout }),
+      setMode: (mode) => set({ mode }),
       toggleCollapse: () => set((s) => ({ collapsed: !s.collapsed })),
-      setCollapsed: (v) => set({ collapsed: v }),
       toggleDark: () => set((s) => ({ darkMode: !s.darkMode })),
-      toggleFixedHeader: () => set((s) => ({ fixedHeader: !s.fixedHeader })),
-      toggleFixedSidebar: () => set((s) => ({ fixedSidebar: !s.fixedSidebar })),
     }),
     {
       name: "layout-config",
