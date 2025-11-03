@@ -32,7 +32,7 @@ export default function Sidebar({ mix }: SidebarProps) {
           key: "dashboard",
           label: "Dashboard",
           icon: Home,
-          href: "/dashboard",
+          href: "/",
         },
         { key: "users", label: "Users", icon: Users, href: "/users" },
         {

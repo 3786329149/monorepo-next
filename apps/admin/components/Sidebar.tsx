@@ -1,9 +1,11 @@
 "use client";
 
-import { useLayoutStore } from "#/store/useLayoutStore";
-import { cn } from "@repo/shadcn/lib/utils";
 import { Home, Users, Settings } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useLayoutStore } from "#/store/useLayoutStore";
+import { cn } from "@repo/shadcn/lib/utils";
+import { ScrollArea } from "@repo/shadcn/components/ui/scroll-area";
 
 const HEADER_HEIGHT = 56;
 const SIDEBAR_WIDTH = 200;
@@ -15,6 +17,7 @@ interface SidebarProps {
 }
 
 export default function Sidebar({ mix }: SidebarProps) {
+  const pathname = usePathname();
   const { collapsed, mode } = useLayoutStore();
 
   const menus = mix
@@ -37,7 +40,7 @@ export default function Sidebar({ mix }: SidebarProps) {
           key: "dashboard",
           label: "Dashboard",
           icon: Home,
-          href: "/dashboard",
+          href: "/",
         },
         { key: "users", label: "Users", icon: Users, href: "/users" },
         {
@@ -48,7 +51,7 @@ export default function Sidebar({ mix }: SidebarProps) {
         },
       ];
   const base =
-    "fixed left-0 border-r border-border bg-background overflow-hidden transition-[width] duration-300 ease-in-out";
+    "fixed left-0 h-screen border-r border-border bg-background overflow-hidden transition-[width] duration-300 ease-in-out";
   const layout = mix
     ? `top-[${HEADER_HEIGHT}px] h-[calc(100vh-${HEADER_HEIGHT}px)]`
     : "top-0 h-screen";
@@ -64,24 +67,33 @@ export default function Sidebar({ mix }: SidebarProps) {
         </div>
       )}
 
-      <nav className="flex flex-col p-2">
-        {menus.map((item) => {
-          const Icon = item.icon;
-          return (
-            <Link
-              key={item.key}
-              href={item.href}
-              className={cn(
-                "flex items-center rounded-md px-3 py-2 text-sm hover:bg-muted transition-all",
-                collapsed ? "justify-center" : "gap-2"
-              )}
-            >
-              <Icon size={18} />
-              {!collapsed && <span>{item.label}</span>}
-            </Link>
-          );
-        })}
-      </nav>
+      <ScrollArea className="flex-1">
+        <nav className="flex flex-col p-2 h-[calc(100vh-56px-44px)]">
+          {menus.map((item) => {
+            const Icon = item.icon;
+            return (
+              <Link
+                key={item.key}
+                href={item.href}
+                className={cn(
+                  "flex   items-center rounded-md px-3 py-2 text-sm hover:bg-muted transition-all",
+                  collapsed ? "justify-center" : "gap-2",
+                  pathname === item.href
+                    ? "bg-primary text-primary-foreground"
+                    : "hover:bg-accent hover:text-foreground"
+                )}
+              >
+                <Icon size={18} />
+                {!collapsed && <span>{item.label}</span>}
+              </Link>
+            );
+          })}
+        </nav>
+      </ScrollArea>
+      {/* footer 可放用户信息或版本 */}
+      <div className="h-14 flex items-center justify-center border-t text-xs text-muted-foreground">
+        {!collapsed ? "v1.0.0 • 管理系统" : "v1.0"}
+      </div>
     </aside>
   );
 }

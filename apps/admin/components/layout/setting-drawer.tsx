@@ -19,14 +19,11 @@ export default function SettingDrawer({
   onOpenChange: (v: boolean) => void;
 }) {
   const {
-    layout,
+    mode,
     darkMode,
-    fixedHeader,
-    fixedSidebar,
-    setLayout,
+
+    setMode,
     toggleDark,
-    toggleFixedHeader,
-    toggleFixedSidebar,
   } = useLayoutStore();
 
   return (
@@ -44,8 +41,8 @@ export default function SettingDrawer({
               {(["side", "top", "mix"] as const).map((type) => (
                 <Button
                   key={type}
-                  variant={layout === type ? "default" : "outline"}
-                  onClick={() => setLayout(type)}
+                  variant={mode === type ? "default" : "outline"}
+                  onClick={() => setMode(type)}
                 >
                   {type === "side" ? "侧边" : type === "top" ? "顶部" : "混合"}
                 </Button>
@@ -64,21 +61,6 @@ export default function SettingDrawer({
               <Moon className="w-4 h-4" />
             </Button> */}
             <Switch checked={darkMode} onCheckedChange={toggleDark} />
-          </div>
-
-          {/* Fixed Header */}
-          <div className="flex items-center justify-between">
-            <Label>固定顶部导航</Label>
-            <Switch checked={fixedHeader} onCheckedChange={toggleFixedHeader} />
-          </div>
-
-          {/* Fixed Sidebar */}
-          <div className="flex items-center justify-between">
-            <Label>固定侧边导航</Label>
-            <Switch
-              checked={fixedSidebar}
-              onCheckedChange={toggleFixedSidebar}
-            />
           </div>
         </div>
       </DrawerContent>
