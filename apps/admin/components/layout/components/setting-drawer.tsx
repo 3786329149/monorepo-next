@@ -6,7 +6,7 @@ import {
   DrawerHeader,
   DrawerTitle,
 } from "@repo/shadcn/components/ui/drawer";
-import { useLayoutStore } from "../../store/useLayoutStore";
+import { useLayoutStore } from "#/store/useLayoutStore";
 import { Switch } from "@repo/shadcn/components/ui/switch";
 import { Button } from "@repo/shadcn/components/ui/button";
 import { Label } from "@repo/shadcn/components/ui/label";
@@ -18,13 +18,7 @@ export default function SettingDrawer({
   open: boolean;
   onOpenChange: (v: boolean) => void;
 }) {
-  const {
-    mode,
-    darkMode,
-
-    setMode,
-    toggleDark,
-  } = useLayoutStore();
+  const { mode, darkMode, setMode, toggleDark } = useLayoutStore();
 
   return (
     <Drawer open={open} onOpenChange={onOpenChange}>

@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation";
 import { useLayoutStore } from "#/store/useLayoutStore";
 import { cn } from "@repo/shadcn/lib/utils";
 
-import SettingDrawer from "./layout/setting-drawer";
+import SettingDrawer from "./setting-drawer";
 import { ChevronLeft, ChevronRight, Settings, LayoutGrid } from "lucide-react";
 
 import {
@@ -16,7 +16,8 @@ import {
   AvatarImage,
 } from "@repo/shadcn/components/ui/avatar";
 import { Button } from "@repo/shadcn/components/ui/button";
-interface TopbarProps {
+import { Switch } from "@repo/shadcn/components/ui/switch";
+interface TopBarProps {
   variant: "side" | "top" | "mix";
 }
 
@@ -26,9 +27,11 @@ const menuItems = [
   { key: "settings", label: "Settings", href: "/settings" },
 ];
 
-export default function Topbar({ variant }: TopbarProps) {
+export default function TopBar({ variant }: TopBarProps) {
   const pathname = usePathname();
-  const { collapsed, toggleCollapse, mode, setMode } = useLayoutStore();
+  const { collapsed, toggleCollapse, mode, setMode, darkMode, toggleDark } =
+    useLayoutStore();
+
   const [openDrawer, setOpenDrawer] = useState(false);
 
   return (
@@ -45,6 +48,7 @@ export default function Topbar({ variant }: TopbarProps) {
           </Button>
         )}
 
+        {/* 侧边栏模式下的菜单栏 */}
         {variant !== "side" && (
           <>
             <span>🌀</span> <span>My Admin</span>
@@ -69,18 +73,17 @@ export default function Topbar({ variant }: TopbarProps) {
       </div>
 
       <div className="flex items-center gap-2">
-        <div className="flex items-center gap-3">
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => setOpenDrawer(true)}
-          >
-            <Settings className="h-5 w-5" />
-          </Button>
-        </div>
+        {/* 用户头像 */}
+        <Avatar>
+          <AvatarImage src="https://github.com/shadcn.png" />
+          <AvatarFallback>AN</AvatarFallback>
+        </Avatar>
+
+        {/* 主题切换示例（可以替换为你的 ThemeProvider hook） */}
+        <Switch checked={darkMode} onCheckedChange={toggleDark} />
 
         {/* 布局切换按钮 */}
-        {/* <Button
+        <Button
           variant="outline"
           size="sm"
           onClick={() =>
@@ -89,13 +92,14 @@ export default function Topbar({ variant }: TopbarProps) {
         >
           <LayoutGrid size={16} className="mr-2" />
           {mode === "side" ? "Side" : mode === "top" ? "Top" : "Mix"}
-        </Button> */}
+        </Button>
 
+        {/* 设置抽屉按钮 */}
+        <Button variant="ghost" size="icon" onClick={() => setOpenDrawer(true)}>
+          <Settings className="h-5 w-5" />
+        </Button>
+        {/* 设置抽屉组件 */}
         <SettingDrawer open={openDrawer} onOpenChange={setOpenDrawer} />
-        <Avatar>
-          <AvatarImage src="https://github.com/shadcn.png" />
-          <AvatarFallback>AN</AvatarFallback>
-        </Avatar>
       </div>
     </header>
   );
