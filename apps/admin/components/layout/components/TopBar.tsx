@@ -29,7 +29,7 @@ const menuItems = [
 
 export default function TopBar({ variant }: TopBarProps) {
   const pathname = usePathname();
-  const { collapsed, toggleCollapse, mode, setMode, darkMode, toggleDark } =
+  const { collapsed, toggleCollapsed, mode, setMode, darkMode, toggleDark } =
     useLayoutStore();
 
   const [openDrawer, setOpenDrawer] = useState(false);
@@ -43,7 +43,7 @@ export default function TopBar({ variant }: TopBarProps) {
     >
       <div className="flex items-center gap-4">
         {variant === "side" && (
-          <Button variant="ghost" size="icon" onClick={toggleCollapse}>
+          <Button variant="ghost" size="icon" onClick={toggleCollapsed}>
             {collapsed ? <ChevronRight size={18} /> : <ChevronLeft size={18} />}
           </Button>
         )}

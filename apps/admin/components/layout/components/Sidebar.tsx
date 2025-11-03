@@ -1,11 +1,13 @@
 "use client";
 
-import { Home, Users, Settings } from "lucide-react";
+import { Home, Users, Settings, ChevronRight, ChevronLeft } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { useLayoutStore } from "#/store/useLayoutStore";
 import { cn } from "@repo/shadcn/lib/utils";
 import { ScrollArea } from "@repo/shadcn/components/ui/scroll-area";
 import { SidebarItem, type MenuItem } from "./SidebarItem";
+import { Button } from "@repo/shadcn/components/ui/button";
+import { useEffect, useState } from "react";
 
 const HEADER_HEIGHT = 56;
 const SIDEBAR_WIDTH = 220;
@@ -70,10 +72,11 @@ const menus: MenuItem[] = [
 
 export default function Sidebar() {
   const pathname = usePathname();
-  const { collapsed, mode } = useLayoutStore();
+  const { collapsed, mode, toggleCollapsed } = useLayoutStore();
 
   const mix = mode === "mix";
 
+  // sidebar 基础样式
   const base =
     "fixed left-0 h-screen border-r border-border bg-background overflow-x-visible overflow-y-hidden transition-[width] duration-300 ease-in-out";
 
@@ -86,15 +89,17 @@ export default function Sidebar() {
     : `w-[${SIDEBAR_WIDTH}px]`;
 
   return (
-    <aside className={cn(base, layout, width)}>
+    <aside className={cn(base, layout, width, "flex flex-col")}>
+      {/* 顶部栏 */}
       {mode === "side" && (
-        <div className="h-[56px] flex items-center justify-center border-b border-border">
+        <div className="h-[56px] flex items-center justify-center border-b border-border shrunk-0">
           {collapsed ? "🌀" : "My Admin"}
         </div>
       )}
 
-      <ScrollArea className="flex-1 overflow-y-auto">
-        <nav className="flex flex-col p-2 min-h-full">
+      {/* 中间菜单滚动区 */}
+      <ScrollArea className="flex-1">
+        <nav className="flex flex-col p-2">
           {menus.map((item) => (
             <SidebarItem
               key={item.key}
@@ -106,8 +111,13 @@ export default function Sidebar() {
         </nav>
       </ScrollArea>
 
-      <div className="h-14 flex items-center justify-center border-t text-xs text-muted-foreground">
+      <div className="h-14 flex items-center justify-center border-t text-xs text-muted-foreground shrink-0">
         {!collapsed ? "v1.0.0 • 管理系统" : "v1.0"}
+        {mode === "mix" && (
+          <Button variant="ghost" size="icon" onClick={toggleCollapsed}>
+            {collapsed ? <ChevronRight size={18} /> : <ChevronLeft size={18} />}
+          </Button>
+        )}
       </div>
     </aside>
   );

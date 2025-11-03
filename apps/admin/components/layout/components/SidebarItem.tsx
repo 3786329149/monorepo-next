@@ -1,15 +1,11 @@
 "use client";
 
-import { useState, useMemo, useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import Link from "next/link";
 import { cn } from "@repo/shadcn/lib/utils";
-import { ChevronDown, ChevronRight } from "lucide-react";
-import {
-  Tooltip,
-  TooltipTrigger,
-  TooltipContent,
-} from "@repo/shadcn/components/ui/tooltip";
+import { ChevronRight } from "lucide-react";
 import { Badge } from "@repo/shadcn/components/ui/badge";
+import { useLayoutStore } from "#/store/useLayoutStore";
 
 export interface MenuItem {
   key: string;
@@ -34,45 +30,62 @@ export function SidebarItem({
   pathname,
   level = 0,
 }: SidebarItemProps) {
-  const [open, setOpen] = useState(false);
+  // 当点击一个菜单项时：如果是父级菜单，就切换 open 状态并写入缓存；如果是子级菜单，就更新“当前激活菜单”的 key。
+  const { openKeys, setOpenKeys, activeKey, setActiveKey } = useLayoutStore();
+
   const hasChildren = !!item.children?.length;
   const Icon = item.icon;
 
-  // 当前菜单自己是否匹配 样式只对 isCurrent 生效（不让父菜单被高亮）
   const isCurrent = item.href && pathname === item.href;
+  const isOpen = openKeys.includes(item.key);
 
-  // 当前子菜单是否处于激活状态
+  // 是否包含激活子项
   const hasActiveChild = useMemo(
     () => hasChildren && item.children!.some((c) => pathname === c.href),
     [pathname, item.children, hasChildren]
   );
 
-  // 自动展开当前激活子菜单的父级
+  // 自动展开当前激活子菜单
   useEffect(() => {
-    if (hasActiveChild) setOpen(true);
+    if (hasActiveChild && !isOpen) {
+      setOpenKeys([...openKeys, item.key]);
+    }
   }, [hasActiveChild]);
 
-  const toggleOpen = () => {
-    if (hasChildren) setOpen((v) => !v);
+  const handleToggle = () => {
+    if (!hasChildren) return;
+
+    if (isOpen) {
+      setOpenKeys(openKeys.filter((k) => k !== item.key));
+    } else {
+      setOpenKeys([...openKeys, item.key]);
+    }
   };
 
-  // 缩进：多层时加大 paddingLeft
+  const handleClick = () => {
+    if (hasChildren) {
+      handleToggle();
+    } else if (item.key) {
+      setActiveKey(item.key);
+    }
+  };
+
   const indent = collapsed ? undefined : 12 + level * 12;
 
   const content = (
     <div
-      onClick={!hasChildren ? undefined : toggleOpen}
+      onClick={handleClick}
       className={cn(
         "group relative flex items-center rounded-md px-3 py-2 text-sm transition-all cursor-pointer select-none",
         collapsed ? "justify-center" : "gap-2",
-        isCurrent
+        activeKey === item.key
           ? "bg-primary text-primary-foreground"
           : "hover:bg-accent hover:text-foreground",
-        hasActiveChild && !isCurrent ? "text-primary font-medium" : undefined // 父级仅用文字高亮，不填满背景
+        hasActiveChild && !isCurrent ? "text-primary font-medium" : undefined // 父级只文字高亮
       )}
       style={{
         paddingLeft: indent,
-        marginTop: level === 0 ? 2 : 0, // 子菜单之间加间距
+        marginTop: level === 0 ? 2 : 0,
       }}
     >
       {Icon && <Icon size={18} />}
@@ -80,7 +93,6 @@ export function SidebarItem({
         <>
           <span className="truncate">{item.label}</span>
 
-          {/* Badge 徽标 */}
           {item.badge && (
             <Badge
               variant={item.badgeColor || "secondary"}
@@ -89,12 +101,12 @@ export function SidebarItem({
               {item.badge}
             </Badge>
           )}
-          {/* 折叠箭头 */}
+
           {hasChildren && (
             <span
               className={cn(
                 "ml-1 transition-transform duration-200",
-                open && "rotate-90"
+                isOpen && "rotate-90"
               )}
             >
               <ChevronRight size={14} />
@@ -115,17 +127,8 @@ export function SidebarItem({
 
   return (
     <div>
-      {collapsed ? (
-        <Tooltip>
-          <TooltipTrigger asChild>{itemElement}</TooltipTrigger>
-          <TooltipContent side="right">{item.label}</TooltipContent>
-        </Tooltip>
-      ) : (
-        itemElement
-      )}
-
-      {/* 子菜单递归渲染 */}
-      {hasChildren && open && !collapsed && (
+      {itemElement}
+      {hasChildren && isOpen && !collapsed && (
         <div className="ml-3 border-l border-border/60 pl-2 mt-1 space-y-0.5">
           {item.children?.map((child) => (
             <SidebarItem
