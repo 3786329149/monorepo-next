@@ -20,25 +20,14 @@ import {
 } from "lucide-react";
 import SettingsSheet from "#/components/SettingsSheet";
 import { useTranslation } from "react-i18next";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@repo/shadcn/components/ui/dropdown-menu";
+
+import { LanguagesTranslate } from "#/components/Languages-translate";
 
 export default function Header() {
   const { t } = useTranslation();
 
-  const {
-    collapsed,
-    toggleCollapsed,
-    mode,
-    setMode,
-    darkMode,
-    toggleDark,
-    setLanguage,
-  } = useLayoutStore();
+  const { collapsed, toggleCollapsed, mode, setMode, darkMode, toggleDark } =
+    useLayoutStore();
   return (
     <header
       className={cn(
@@ -60,29 +49,7 @@ export default function Header() {
 
       <div className="flex items-center gap-3">
         {/* 🌐 语言切换 */}
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button
-              variant="outline"
-              size="sm"
-              className="flex items-center gap-2"
-            >
-              <Languages className="w-4 h-4" />
-              <span>{t("language")}</span>
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuItem onClick={() => setLanguage("en-US")}>
-              English
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => setLanguage("zh-CN")}>
-              中文
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => setLanguage("ja-JP")}>
-              日本語
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <LanguagesTranslate />
 
         {/* 主题切换示例（可以替换为你的 ThemeProvider hook） */}
         {/* 🌗 主题切换 */}

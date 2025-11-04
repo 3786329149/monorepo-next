@@ -10,11 +10,14 @@ import {
 import { Switch } from "@repo/shadcn/components/ui/switch";
 import { Button } from "@repo/shadcn/components/ui/button";
 import { useLayoutStore } from "#/store/useLayoutStore";
-import { ChevronLeft, ChevronRight, LayoutGrid } from "lucide-react";
+import { ChevronLeft, ChevronRight, LayoutGrid, Moon, Sun } from "lucide-react";
 import { motion } from "framer-motion";
 import SettingsSheet from "#/components/SettingsSheet";
+import { LanguagesTranslate } from "#/components/Languages-translate";
+import { useTranslation } from "react-i18next";
 
 export default function Header() {
+  const { t } = useTranslation();
   const { collapsed, toggleCollapsed, mode, setMode, darkMode, toggleDark } =
     useLayoutStore();
   return (
@@ -45,8 +48,19 @@ export default function Header() {
 
       {/* 右侧 用户区  */}
       <div className="flex items-center gap-2">
+        <LanguagesTranslate />
+
         {/* 主题切换示例（可以替换为你的 ThemeProvider hook） */}
-        <Switch checked={darkMode} onCheckedChange={toggleDark} />
+        {/* 🌗 主题切换 */}
+        <div className="flex items-center gap-2 px-2">
+          {darkMode ? (
+            <Moon className="w-4 h-4" />
+          ) : (
+            <Sun className="w-4 h-4" />
+          )}
+          <span>{t("theme")}</span>
+          <Switch checked={darkMode} onCheckedChange={toggleDark} />
+        </div>
 
         {/* 布局切换按钮 */}
         <Button

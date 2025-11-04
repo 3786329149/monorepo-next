@@ -16,6 +16,7 @@ import {
   AvatarImage,
 } from "@repo/shadcn/components/ui/avatar";
 import SettingsSheet from "#/components/SettingsSheet";
+import { LanguagesTranslate } from "#/components/Languages-translate";
 
 export default function Header() {
   const router = useRouter();
@@ -54,6 +55,9 @@ export default function Header() {
 
       {/* 右侧 - 用户 */}
       <div className="flex items-center text-sm text-muted-foreground gap-3">
+        {/* 🌐 语言切换 */}
+        <LanguagesTranslate />
+
         {/* 主题切换示例（可以替换为你的 ThemeProvider hook） */}
         <Switch checked={darkMode} onCheckedChange={toggleDark} />
 
