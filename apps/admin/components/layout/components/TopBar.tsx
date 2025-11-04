@@ -8,7 +8,14 @@ import { useLayoutStore } from "#/store/useLayoutStore";
 import { cn } from "@repo/shadcn/lib/utils";
 
 import SettingDrawer from "./setting-drawer";
-import { ChevronLeft, ChevronRight, Settings, LayoutGrid } from "lucide-react";
+import {
+  ChevronLeft,
+  ChevronRight,
+  Settings,
+  LayoutGrid,
+  Home,
+  Users,
+} from "lucide-react";
 
 import {
   Avatar,
@@ -17,16 +24,68 @@ import {
 } from "@repo/shadcn/components/ui/avatar";
 import { Button } from "@repo/shadcn/components/ui/button";
 import { Switch } from "@repo/shadcn/components/ui/switch";
+import TopBarItem from "./TopBarIterm";
+import type { MenuItem } from "./SidebarItem";
 interface TopBarProps {
   variant: "side" | "top" | "mix";
 }
 
-const menuItems = [
-  { key: "dashboard", label: "Dashboard", href: "/dashboard" },
-  { key: "users", label: "Users", href: "/users" },
-  { key: "settings", label: "Settings", href: "/settings" },
+const menus: MenuItem[] = [
+  {
+    key: "dashboard",
+    label: "Dashboard",
+    icon: Home,
+    href: "/",
+    badgeColor: "destructive",
+    badge: "NEW",
+  },
+  {
+    key: "users",
+    label: "Users",
+    icon: Users,
+    badgeColor: "destructive",
+    badge: "NEW",
+    children: [
+      {
+        key: "user-list",
+        label: "User List",
+        href: "/users/list",
+        badgeColor: "destructive",
+        badge: "update",
+        children: [
+          {
+            key: "user-list-admin",
+            label: "Admin Role",
+            href: "/users/list/admin",
+            badgeColor: "default",
+            badge: "10",
+          },
+          {
+            key: "user-list-developer",
+            label: "Develop Role",
+            href: "/users/list/develop",
+            badgeColor: "outline",
+            badge: "20",
+          },
+        ],
+      },
+      {
+        key: "user-permission",
+        label: "Permissions",
+        href: "/users/permissions",
+      },
+    ],
+  },
+  {
+    key: "settings",
+    label: "Settings",
+    icon: Settings,
+    children: [
+      { key: "general", label: "General", href: "/settings/general" },
+      { key: "profile", label: "Profile", href: "/settings/profile" },
+    ],
+  },
 ];
-
 export default function TopBar({ variant }: TopBarProps) {
   const pathname = usePathname();
   const { collapsed, toggleCollapsed, mode, setMode, darkMode, toggleDark } =
@@ -48,12 +107,19 @@ export default function TopBar({ variant }: TopBarProps) {
           </Button>
         )}
 
-        {/* 侧边栏模式下的菜单栏 */}
         {variant !== "side" && (
           <>
             <span>🌀</span> <span>My Admin</span>
-            <nav className="flex items-center gap-4">
-              {menuItems.map((item) => (
+          </>
+        )}
+
+        {/* top模式下的菜单栏 */}
+        {variant === "top" && (
+          <nav className="flex items-center gap-4">
+            {menus.map((item) => (
+              <TopBarItem key={item.key} item={item} />
+            ))}
+            {/* {menuItems.map((item) => (
                 <Link
                   key={item.key}
                   href={item.href}
@@ -66,9 +132,8 @@ export default function TopBar({ variant }: TopBarProps) {
                 >
                   {item.label}
                 </Link>
-              ))}
-            </nav>
-          </>
+              ))} */}
+          </nav>
         )}
       </div>
 

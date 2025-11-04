@@ -17,7 +17,7 @@ export default function LayoutMix({ children }: { children: React.ReactNode }) {
         <main
           className={cn(
             "flex-1 overflow-auto bg-muted/30 p-6 transition-all duration-300",
-            collapsed ? "ml-[64px]" : "ml-[200px]"
+            collapsed ? "ml-[64px]" : "ml-[220px]"
           )}
         >
           {children}

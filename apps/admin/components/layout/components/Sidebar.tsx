@@ -7,7 +7,6 @@ import { cn } from "@repo/shadcn/lib/utils";
 import { ScrollArea } from "@repo/shadcn/components/ui/scroll-area";
 import { SidebarItem, type MenuItem } from "./SidebarItem";
 import { Button } from "@repo/shadcn/components/ui/button";
-import { useEffect, useState } from "react";
 
 const HEADER_HEIGHT = 56;
 const SIDEBAR_WIDTH = 220;
@@ -80,6 +79,7 @@ export default function Sidebar() {
   const base =
     "fixed left-0 h-screen border-r border-border bg-background overflow-x-visible overflow-y-hidden transition-[width] duration-300 ease-in-out";
 
+  //TODO: 明天修复
   const layout = mix
     ? `top-[${HEADER_HEIGHT}px] h-[calc(100vh-${HEADER_HEIGHT}px)]`
     : "top-0 h-screen z-50";

@@ -19,7 +19,7 @@ export default function LayoutSide({
       <div
         className={cn(
           "flex flex-col flex-1 transition-all duration-300",
-          collapsed ? "ml-[64px]" : "ml-[200px]"
+          collapsed ? "ml-[64px]" : "ml-[220px]"
         )}
       >
         <TopBar variant="side" />
