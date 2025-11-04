@@ -6,6 +6,7 @@ import { cn } from "@repo/shadcn/lib/utils";
 import { ChevronRight } from "lucide-react";
 import { Badge } from "@repo/shadcn/components/ui/badge";
 import { useLayoutStore } from "#/store/useLayoutStore";
+import { motion } from "framer-motion";
 
 export interface MenuItem {
   key: string;
@@ -41,7 +42,11 @@ export function SidebarItem({
 
   // 是否包含激活子项
   const hasActiveChild = useMemo(
-    () => hasChildren && item.children!.some((c) => pathname === c.href),
+    () =>
+      hasChildren &&
+      item.children!.some(
+        (c) => pathname === c.href || pathname.startsWith(c.href ?? "")
+      ),
     [pathname, item.children, hasChildren]
   );
 
@@ -70,7 +75,7 @@ export function SidebarItem({
     }
   };
 
-  const indent = collapsed ? undefined : 12 + level * 12;
+  const indent = collapsed ? undefined : 10 + level * 10;
 
   const content = (
     <div
@@ -89,31 +94,46 @@ export function SidebarItem({
       }}
     >
       {Icon && <Icon size={18} />}
-      {!collapsed && (
-        <>
-          <span className="truncate">{item.label}</span>
 
-          {item.badge && (
+      {/* 动画包裹文本、Badge 和 Chevron */}
+      <motion.div
+        initial={false}
+        animate={{
+          opacity: collapsed ? 0 : 1,
+          width: collapsed ? 0 : "auto",
+        }}
+        transition={{ duration: 0.2 }}
+        className="flex items-center gap-2 overflow-hidden"
+      >
+        <span className="truncate">{item.label}</span>
+
+        {item.badge && (
+          <motion.div
+            layout
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.8 }}
+            transition={{ duration: 0.2 }}
+          >
             <Badge
               variant={item.badgeColor || "secondary"}
               className="ml-auto text-[10px] font-medium h-4 px-1.5"
             >
               {item.badge}
             </Badge>
-          )}
+          </motion.div>
+        )}
 
-          {hasChildren && (
-            <span
-              className={cn(
-                "ml-1 transition-transform duration-200",
-                isOpen && "rotate-90"
-              )}
-            >
-              <ChevronRight size={14} />
-            </span>
-          )}
-        </>
-      )}
+        {hasChildren && (
+          <motion.span
+            animate={{ rotate: isOpen ? 90 : 0 }}
+            transition={{ duration: 0.2 }}
+            className="ml-1"
+          >
+            <ChevronRight size={14} />
+          </motion.span>
+        )}
+      </motion.div>
     </div>
   );
 
@@ -128,18 +148,29 @@ export function SidebarItem({
   return (
     <div>
       {itemElement}
-      {hasChildren && isOpen && !collapsed && (
-        <div className="ml-3 border-l border-border/60 pl-2 mt-1 space-y-0.5">
-          {item.children?.map((child) => (
-            <SidebarItem
-              key={child.key}
-              item={child}
-              collapsed={collapsed}
-              pathname={pathname}
-              level={level + 1}
-            />
-          ))}
-        </div>
+      {/* 子菜单展开动画 */}
+      {hasChildren && !collapsed && (
+        <motion.div
+          initial={false}
+          animate={{
+            height: isOpen ? "auto" : 0,
+            opacity: isOpen ? 1 : 0,
+          }}
+          transition={{ duration: 0.2, ease: "easeInOut" }}
+          className="overflow-hidden"
+        >
+          <div className="ml-3 border-l border-border/60 pl-2 mt-1 space-y-0.5">
+            {item.children?.map((child) => (
+              <SidebarItem
+                key={child.key}
+                item={child}
+                collapsed={collapsed}
+                pathname={pathname}
+                level={level + 1}
+              />
+            ))}
+          </div>
+        </motion.div>
       )}
     </div>
   );

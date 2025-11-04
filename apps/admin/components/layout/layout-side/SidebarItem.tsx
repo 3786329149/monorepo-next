@@ -108,12 +108,20 @@ export function SidebarItem({
         <span className="truncate">{item.label}</span>
 
         {item.badge && (
-          <Badge
-            variant={item.badgeColor || "secondary"}
-            className="ml-auto text-[10px] font-medium h-4 px-1.5 shrink-0"
+          <motion.div
+            layout
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.8 }}
+            transition={{ duration: 0.2 }}
           >
-            {item.badge}
-          </Badge>
+            <Badge
+              variant={item.badgeColor || "secondary"}
+              className="ml-auto text-[10px] font-medium h-4 px-1.5"
+            >
+              {item.badge}
+            </Badge>
+          </motion.div>
         )}
 
         {hasChildren && (

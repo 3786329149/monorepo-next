@@ -13,7 +13,7 @@ interface LayoutState {
   openKeys: string[]; // 当前展开的菜单key列表
   setOpenKeys: (keys: string[]) => void;
 
-  activeKey: string | null; // 当前激活路径
+  activeKey: string; // 当前激活路径
   setActiveKey: (key: string) => void;
 
   collapsed: boolean; // 侧边栏是否收起（对 side / mix 有效）

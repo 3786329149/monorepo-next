@@ -1,23 +1,10 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { motion } from "framer-motion";
 import { cn } from "@repo/shadcn/lib/utils";
 
-import {
-  ChevronLeft,
-  ChevronRight,
-  Home,
-  Menu,
-  Settings,
-  Users,
-} from "lucide-react";
-import {
-  SIDEBAR_COLLAPSED,
-  SIDEBAR_WIDTH,
-  FOOTER_HEIGHT,
-  HEADER_HEIGHT,
-} from "#/constants";
+import { Home, Menu, Settings, Users } from "lucide-react";
+import { FOOTER_HEIGHT } from "#/constants";
 import { useLayoutStore } from "#/store/useLayoutStore";
 import { SidebarItem, type MenuItem } from "./SidebarItem";
 
@@ -83,38 +70,8 @@ export default function Sidebar() {
   const { collapsed, toggleCollapsed } = useLayoutStore();
 
   return (
-    <motion.aside
-      layout
-      animate={{ width: collapsed ? SIDEBAR_COLLAPSED : SIDEBAR_WIDTH }}
-      transition={{ duration: 0.25, ease: "easeInOut" }}
-      className="relative border-r border-border bg-background flex flex-col"
-    >
-      {/* Sidebar 顶部区域 */}
-      <div
-        className={cn(
-          "flex items-center justify-between  px-4 border-b border-border"
-        )}
-        style={{ height: HEADER_HEIGHT }}
-      >
-        {/* 左侧 Logo */}
-        {!collapsed ? (
-          <span className="font-semibold text-base">My Admin</span>
-        ) : (
-          <span className="text-lg">🌀</span>
-        )}
-
-        {/* 右侧折叠按钮 */}
-        {/* <Button
-          variant="ghost"
-          size="icon"
-          onClick={toggleCollapsed}
-          className="shrink-0"
-        >
-          {collapsed ? <ChevronRight size={18} /> : <ChevronLeft size={18} />}
-        </Button> */}
-      </div>
-
-      {/* Sidebar 中间菜单区域 */}
+    <div className="flex flex-col h-full">
+      {/* 菜单滚动区 */}
       <div
         className={cn(
           "flex-1 overflow-y-auto overflow-x-hidden px-2 py-2  scrollbar-thin scrollbar-thumb-border/40 hover:scrollbar-thumb-border/60",
@@ -133,7 +90,7 @@ export default function Sidebar() {
 
       {/* 底部固定区域 */}
       <div
-        className="border-t flex items-center justify-center text-xs text-muted-foreground"
+        className=" border-t flex items-center justify-center text-xs text-muted-foreground"
         style={{ height: FOOTER_HEIGHT }}
       >
         {!collapsed && <span>v1.0.0</span>}
@@ -144,6 +101,6 @@ export default function Sidebar() {
           <Menu size={20} />
         </button>
       </div>
-    </motion.aside>
+    </div>
   );
 }
