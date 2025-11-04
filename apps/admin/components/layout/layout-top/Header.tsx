@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import { TopBarItem } from "./TopBarItem";
 import { HEADER_HEIGHT } from "#/constants";
 import { useLayoutStore } from "#/store/useLayoutStore";
-import { menus } from "#/constants";
+import { menus } from "#/mock/menu";
 import { Switch } from "@repo/shadcn/components/ui/switch";
 import { Button } from "@repo/shadcn/components/ui/button";
 import { LayoutGrid } from "lucide-react";

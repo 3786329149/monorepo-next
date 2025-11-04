@@ -6,64 +6,8 @@ import { cn } from "@repo/shadcn/lib/utils";
 import { Home, Menu, Settings, Users } from "lucide-react";
 import { FOOTER_HEIGHT } from "#/constants";
 import { useLayoutStore } from "#/store/useLayoutStore";
-import { SidebarItem, type MenuItem } from "./SidebarItem";
-
-const menus: MenuItem[] = [
-  {
-    key: "dashboard",
-    label: "Dashboard",
-    icon: Home,
-    href: "/",
-    badgeColor: "destructive",
-    badge: "NEW",
-  },
-  {
-    key: "users",
-    label: "Users",
-    icon: Users,
-    badgeColor: "destructive",
-    badge: "NEW",
-    children: [
-      {
-        key: "user-list",
-        label: "User List",
-        href: "/users/list",
-        badgeColor: "destructive",
-        badge: "update",
-        children: [
-          {
-            key: "user-list-admin",
-            label: "Admin Role",
-            href: "/users/list/admin",
-            badgeColor: "default",
-            badge: "10",
-          },
-          {
-            key: "user-list-developer",
-            label: "Develop Role",
-            href: "/users/list/develop",
-            badgeColor: "outline",
-            badge: "20",
-          },
-        ],
-      },
-      {
-        key: "user-permission",
-        label: "Permissions",
-        href: "/users/permissions",
-      },
-    ],
-  },
-  {
-    key: "settings",
-    label: "Settings",
-    icon: Settings,
-    children: [
-      { key: "general", label: "General", href: "/settings/general" },
-      { key: "profile", label: "Profile", href: "/settings/profile" },
-    ],
-  },
-];
+import { SidebarItem } from "./SidebarItem";
+import { menus } from "#/mock/menu";
 
 export default function Sidebar() {
   const pathname = usePathname();
