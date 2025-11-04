@@ -1,0 +1,20 @@
+{
+  "theme": "ダークモード",
+  "layout": "レイアウトモード",
+  "language": "言語",
+  "layout_side": "サイドレイアウト",
+  "layout_mix": "ミックスレイアウト",
+  "layout_top": "トップレイアウト",
+  "settings": "システム設定",
+  "route": {
+    "dashboard": "ダッシュボード",
+    "users": "ユーザー管理",
+    "UsersList": "ユーザーリスト",
+    "AdminRole": "管理者ロール",
+    "DevelopRole": "開発者ロール",
+    "Permission": "権限管理",
+    "Settings": "設定",
+    "General": "一般設定",
+    "Profile": "プロフィール"
+  }
+}

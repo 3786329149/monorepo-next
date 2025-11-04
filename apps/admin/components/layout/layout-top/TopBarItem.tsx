@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import type { MenuItem } from "#/constants";
+
 import { motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 
@@ -18,14 +18,12 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@repo/shadcn/components/ui/dropdown-menu";
+import { MenuItem } from "#/mock/menu";
 
 interface TopBarItemProps {
   item: MenuItem;
   pathname: string;
   activeKey: string;
-  icon?: React.ReactNode;
-  onClick?: () => void;
-  active?: boolean;
   setActiveKey: (key: string) => void;
 }
 
@@ -45,12 +43,15 @@ export function TopBarItem({
   setActiveKey,
 }: TopBarItemProps) {
   const router = useRouter();
+
+  const Icon = item.icon;
+
   // 判断当前项是否处于激活状态
   const isActive =
     pathname === item.href ||
     activeKey === item.key ||
     hasActiveChild(item, pathname);
-  console.log("isActive", isActive);
+
   const handleClick = (href?: string, key?: string) => {
     if (href) router.push(href);
     if (key) setActiveKey(key);
@@ -123,6 +124,7 @@ export function TopBarItem({
                   "text-primary font-medium border-b-2 border-primary rounded-none"
               )}
             >
+              {Icon && <Icon size={18} />}
               {item.label}
               {item.badge && (
                 <Badge
@@ -154,8 +156,8 @@ export function TopBarItem({
             "text-primary font-medium border-b-2 border-primary rounded-none"
         )}
       >
+        {Icon && <Icon size={18} />}
         {item.label}
-
         {item.badge && (
           <Badge
             variant={item.badgeColor || "secondary"}

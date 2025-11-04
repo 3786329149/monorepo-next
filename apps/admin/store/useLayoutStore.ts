@@ -1,7 +1,10 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
+import i18n from "#/i18n";
+
 export type LayoutMode = "side" | "top" | "mix";
+export type Language = "zh-CN" | "en-US" | "ja-JP";
 
 interface LayoutState {
   mode: LayoutMode;
@@ -18,6 +21,9 @@ interface LayoutState {
 
   collapsed: boolean; // 侧边栏是否收起（对 side / mix 有效）
   toggleCollapsed: () => void;
+
+  language: Language;
+  setLanguage: (lang: Language) => void;
 }
 
 export const useLayoutStore = create<LayoutState>()(
@@ -37,6 +43,13 @@ export const useLayoutStore = create<LayoutState>()(
 
       openKeys: [],
       setOpenKeys: (keys) => set({ openKeys: keys }),
+
+      language: (i18n.language as Language) || "zh-CN",
+      setLanguage: (language) => {
+        i18n.changeLanguage(language);
+        localStorage.setItem("i18nextLng", language);
+        set({ language });
+      },
     }),
 
     {

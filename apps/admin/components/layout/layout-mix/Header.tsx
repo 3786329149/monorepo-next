@@ -12,6 +12,7 @@ import { Button } from "@repo/shadcn/components/ui/button";
 import { useLayoutStore } from "#/store/useLayoutStore";
 import { ChevronLeft, ChevronRight, LayoutGrid } from "lucide-react";
 import { motion } from "framer-motion";
+import SettingsSheet from "#/components/SettingsSheet";
 
 export default function Header() {
   const { collapsed, toggleCollapsed, mode, setMode, darkMode, toggleDark } =
@@ -58,6 +59,9 @@ export default function Header() {
           <LayoutGrid size={16} className="mr-2" />
           {mode === "side" ? "Side" : mode === "top" ? "Top" : "Mix"}
         </Button>
+
+        {/* ✅ 设置抽屉 */}
+        <SettingsSheet />
 
         {/* 用户头像 */}
         <Avatar>

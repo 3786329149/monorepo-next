@@ -1,0 +1,20 @@
+{
+  "theme": "Dark Mode",
+  "layout": "Layout Mode",
+  "language": "Language",
+  "layout_side": "Side Layout",
+  "layout_mix": "Mixed Layout",
+  "layout_top": "Top Layout",
+  "settings": "System Settings",
+  "route": {
+    "dashboard": "dashboard",
+    "users": "users",
+    "UsersList": "User List",
+    "AdminRole": "Admin Role",
+    "DevelopRole": "Develop Role",
+    "Permission": "Permissions",
+    "Settings": "Settings",
+    "General": "General",
+    "Profile": "Profile"
+  }
+}

@@ -1,4 +1,5 @@
 import { Home, Settings, Users } from "lucide-react";
+
 export interface MenuItem {
   key: string;
   label: string;
@@ -12,7 +13,7 @@ export interface MenuItem {
 export const menus: MenuItem[] = [
   {
     key: "dashboard",
-    label: "Dashboard",
+    label: "dashboard",
     icon: Home,
     href: "/dashboard",
     badgeColor: "destructive",
@@ -26,21 +27,21 @@ export const menus: MenuItem[] = [
     badge: "NEW",
     children: [
       {
-        key: "user-list",
+        key: "UsersList",
         label: "User List",
         href: "/users/list",
         badgeColor: "destructive",
         badge: "update",
         children: [
           {
-            key: "user-list-admin",
+            key: "AdminRole",
             label: "Admin Role",
             href: "/users/list/admin",
             badgeColor: "default",
             badge: "10",
           },
           {
-            key: "user-list-developer",
+            key: "DevelopRole",
             label: "Develop Role",
             href: "/users/list/develop",
             badgeColor: "outline",
@@ -49,19 +50,19 @@ export const menus: MenuItem[] = [
         ],
       },
       {
-        key: "user-permission",
+        key: "Permission",
         label: "Permissions",
         href: "/users/permissions",
       },
     ],
   },
   {
-    key: "settings",
+    key: "Settings",
     label: "Settings",
     icon: Settings,
     children: [
-      { key: "general", label: "General", href: "/settings/general" },
-      { key: "profile", label: "Profile", href: "/settings/profile" },
+      { key: "General", label: "General", href: "/settings/general" },
+      { key: "Profile", label: "Profile", href: "/settings/profile" },
     ],
   },
 ];

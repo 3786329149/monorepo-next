@@ -7,6 +7,7 @@ import { ChevronRight } from "lucide-react";
 import { Badge } from "@repo/shadcn/components/ui/badge";
 import { useLayoutStore } from "#/store/useLayoutStore";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 export interface MenuItem {
   key: string;
@@ -33,6 +34,8 @@ export function SidebarItem({
 }: SidebarItemProps) {
   // 当点击一个菜单项时：如果是父级菜单，就切换 open 状态并写入缓存；如果是子级菜单，就更新“当前激活菜单”的 key。
   const { openKeys, setOpenKeys, activeKey, setActiveKey } = useLayoutStore();
+
+  const { t } = useTranslation();
 
   const hasChildren = !!item.children?.length;
   const Icon = item.icon;
@@ -105,7 +108,8 @@ export function SidebarItem({
         transition={{ duration: 0.2 }}
         className="flex items-center gap-2 overflow-hidden"
       >
-        <span className="truncate">{item.label}</span>
+        {/* <span className="truncate">{item.label}</span> */}
+        <span className="truncate">{t(`route.${item.key}`)}</span>
 
         {item.badge && (
           <motion.div

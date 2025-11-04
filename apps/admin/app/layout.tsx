@@ -1,8 +1,10 @@
+import type { Metadata } from "next";
+import { Geist } from "next/font/google";
+
 import "@repo/ui/styles.css";
 import "@repo/shadcn/styles/globals.css";
 import "./globals.css";
-import type { Metadata } from "next";
-import { Geist } from "next/font/google";
+import "#/i18n";
 
 import ThemeWatcher from "#/provider/theme-providers";
 

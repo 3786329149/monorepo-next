@@ -15,6 +15,7 @@ import {
   AvatarFallback,
   AvatarImage,
 } from "@repo/shadcn/components/ui/avatar";
+import SettingsSheet from "#/components/SettingsSheet";
 
 export default function Header() {
   const router = useRouter();
@@ -67,6 +68,9 @@ export default function Header() {
           <LayoutGrid size={16} className="mr-2" />
           {mode === "side" ? "Side" : mode === "top" ? "Top" : "Mix"}
         </Button>
+
+        {/* ✅ 设置抽屉 */}
+        <SettingsSheet />
 
         {/* 用户头像 */}
         <Avatar>
