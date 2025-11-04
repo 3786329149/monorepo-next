@@ -7,22 +7,17 @@ import { TopBarItem } from "./TopBarItem";
 import { HEADER_HEIGHT } from "#/constants";
 import { useLayoutStore } from "#/store/useLayoutStore";
 import { menus } from "#/mock/menu";
-import { Switch } from "@repo/shadcn/components/ui/switch";
-import { Button } from "@repo/shadcn/components/ui/button";
-import { LayoutGrid } from "lucide-react";
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@repo/shadcn/components/ui/avatar";
+
 import SettingsSheet from "#/components/SettingsSheet";
 import { LanguagesTranslate } from "#/components/Languages-translate";
+import { SwitchTheme } from "#/components/Switch-theme";
+import { UserAvatar } from "#/components/user-avatar";
+import { SwitchLayout } from "#/components/Switch-Layout";
 
 export default function Header() {
   const router = useRouter();
   const pathname = usePathname();
-  const { mode, setMode, darkMode, toggleDark, activeKey, setActiveKey } =
-    useLayoutStore();
+  const { activeKey, setActiveKey } = useLayoutStore();
 
   return (
     <motion.header
@@ -58,30 +53,17 @@ export default function Header() {
         {/* 🌐 语言切换 */}
         <LanguagesTranslate />
 
-        {/* 主题切换示例（可以替换为你的 ThemeProvider hook） */}
-        <Switch checked={darkMode} onCheckedChange={toggleDark} />
+        {/* 🌗 主题切换 */}
+        <SwitchTheme />
 
         {/* 布局切换按钮 */}
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() =>
-            setMode(mode === "side" ? "top" : mode === "top" ? "mix" : "side")
-          }
-        >
-          <LayoutGrid size={16} className="mr-2" />
-          {mode === "side" ? "Side" : mode === "top" ? "Top" : "Mix"}
-        </Button>
+        <SwitchLayout />
 
-        {/* ✅ 设置抽屉 */}
+        {/* 设置抽屉 */}
         <SettingsSheet />
 
         {/* 用户头像 */}
-        <Avatar>
-          <AvatarImage src="https://github.com/shadcn.png" />
-          <AvatarFallback>AN</AvatarFallback>
-        </Avatar>
-        <span className="text-xs text-muted-foreground">Hello, Ann 👋</span>
+        <UserAvatar />
       </div>
     </motion.header>
   );

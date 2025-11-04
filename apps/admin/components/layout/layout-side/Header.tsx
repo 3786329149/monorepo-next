@@ -2,32 +2,19 @@
 
 import { cn } from "@repo/shadcn/lib/utils";
 import { HEADER_HEIGHT } from "#/constants";
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@repo/shadcn/components/ui/avatar";
-import { Switch } from "@repo/shadcn/components/ui/switch";
+
 import { Button } from "@repo/shadcn/components/ui/button";
 import { useLayoutStore } from "#/store/useLayoutStore";
-import {
-  ChevronLeft,
-  ChevronRight,
-  Languages,
-  LayoutGrid,
-  Moon,
-  Sun,
-} from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import SettingsSheet from "#/components/SettingsSheet";
-import { useTranslation } from "react-i18next";
 
 import { LanguagesTranslate } from "#/components/Languages-translate";
+import { SwitchTheme } from "#/components/Switch-theme";
+import { UserAvatar } from "#/components/user-avatar";
+import { SwitchLayout } from "#/components/Switch-Layout";
 
 export default function Header() {
-  const { t } = useTranslation();
-
-  const { collapsed, toggleCollapsed, mode, setMode, darkMode, toggleDark } =
-    useLayoutStore();
+  const { collapsed, toggleCollapsed } = useLayoutStore();
   return (
     <header
       className={cn(
@@ -51,39 +38,17 @@ export default function Header() {
         {/* 🌐 语言切换 */}
         <LanguagesTranslate />
 
-        {/* 主题切换示例（可以替换为你的 ThemeProvider hook） */}
         {/* 🌗 主题切换 */}
-        <div className="flex items-center gap-2 px-2">
-          {darkMode ? (
-            <Moon className="w-4 h-4" />
-          ) : (
-            <Sun className="w-4 h-4" />
-          )}
-          <span>{t("theme")}</span>
-          <Switch checked={darkMode} onCheckedChange={toggleDark} />
-        </div>
+        <SwitchTheme />
 
         {/* 布局切换按钮 */}
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() =>
-            setMode(mode === "side" ? "top" : mode === "top" ? "mix" : "side")
-          }
-        >
-          <LayoutGrid size={16} className="mr-2" />
-          {mode === "side" ? "Side" : mode === "top" ? "Top" : "Mix"}
-        </Button>
+        <SwitchLayout />
 
-        {/* ✅ 设置抽屉 */}
+        {/* 设置抽屉 */}
         <SettingsSheet />
 
         {/* 用户头像 */}
-        <Avatar>
-          <AvatarImage src="https://github.com/shadcn.png" />
-          <AvatarFallback>AN</AvatarFallback>
-        </Avatar>
-        <span className="text-xs text-muted-foreground">Hello, Ann 👋</span>
+        <UserAvatar />
       </div>
     </header>
   );
