@@ -5,7 +5,9 @@ import { useLayoutStore } from "#/store/useLayoutStore";
 // import TopBar from "../TopBar";
 // import { cn } from "@repo/shadcn/lib/utils";
 
-import LayoutSide from "./layout-side";
+import LayoutSide from "./layout-side/index";
+
+// import LayoutSide from "./layout-side";
 import LayoutTop from "./layout-top";
 import LayoutMix from "./layout-mix";
 
