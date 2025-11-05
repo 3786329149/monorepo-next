@@ -1,3 +1,5 @@
+"use client";
+
 import { motion } from "framer-motion";
 
 import { SIDEBAR_COLLAPSED, SIDEBAR_WIDTH } from "#/constants";

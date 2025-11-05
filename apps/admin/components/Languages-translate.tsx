@@ -27,7 +27,7 @@ export function LanguagesTranslate() {
             className="flex items-center gap-2"
           >
             <Languages className="w-4 h-4" />
-            <span>{t("language")}</span>
+            <span suppressHydrationWarning>{t("language")}</span>
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
