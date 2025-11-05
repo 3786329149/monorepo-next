@@ -8,6 +8,7 @@
   "settings": "System Settings",
   "route": {
     "dashboard": "dashboard",
+    "tailwind": "tailwind",
     "users": "users",
     "UsersList": "User List",
     "AdminRole": "Admin Role",

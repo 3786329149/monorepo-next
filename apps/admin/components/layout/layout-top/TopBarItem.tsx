@@ -19,7 +19,6 @@ import {
   DropdownMenuTrigger,
 } from "@repo/shadcn/components/ui/dropdown-menu";
 import { MenuItem } from "#/mock/menu";
-
 import { useTranslations } from "next-intl";
 
 interface TopBarItemProps {
@@ -45,7 +44,6 @@ export function TopBarItem({
   setActiveKey,
 }: TopBarItemProps) {
   const router = useRouter();
-
   const t = useTranslations();
 
   const Icon = item.icon;
@@ -75,8 +73,7 @@ export function TopBarItem({
                 isChildActive && "text-primary font-medium"
               )}
             >
-              {/* {child.label} */}
-              {t(`route.${item.key}`)}
+              {t(`route.${child.key}`)}
               {child.badge && (
                 <Badge
                   variant={child.badgeColor || "secondary"}
@@ -102,8 +99,8 @@ export function TopBarItem({
             isChildActive && "text-primary font-medium bg-muted"
           )}
         >
-          {/* {child.label} */}
-          {t(`route.${item.key}`)}
+          {t(`route.${child.key}`)}
+
           {child.badge && (
             <Badge
               variant={child.badgeColor || "secondary"}
@@ -131,8 +128,9 @@ export function TopBarItem({
               )}
             >
               {Icon && <Icon size={18} />}
-              {/* {item.label} */}
+
               {t(`route.${item.key}`)}
+
               {item.badge && (
                 <Badge
                   variant={item.badgeColor || "secondary"}
@@ -164,7 +162,7 @@ export function TopBarItem({
         )}
       >
         {Icon && <Icon size={18} />}
-        {/* {item.label} */}
+
         {t(`route.${item.key}`)}
         {item.badge && (
           <Badge

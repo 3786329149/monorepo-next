@@ -70,8 +70,9 @@ export function SidebarItem({
     }
   };
 
-  const handleClick = () => {
+  const handleClick = (e: React.MouseEvent) => {
     if (hasChildren) {
+      e.preventDefault(); // 阻止跳转
       handleToggle();
     } else if (item.key) {
       setActiveKey(item.key);

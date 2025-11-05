@@ -9,6 +9,7 @@
   "route": {
     "dashboard": "ダッシュボード",
     "users": "ユーザー管理",
+    "tailwind": "tailwind",
     "UsersList": "ユーザーリスト",
     "AdminRole": "管理者ロール",
     "DevelopRole": "開発者ロール",

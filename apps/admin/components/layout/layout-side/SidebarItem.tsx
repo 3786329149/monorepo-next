@@ -70,8 +70,9 @@ export function SidebarItem({
     }
   };
 
-  const handleClick = () => {
+  const handleClick = (e: React.MouseEvent) => {
     if (hasChildren) {
+      e.preventDefault(); // 阻止跳转
       handleToggle();
     } else if (item.key) {
       setActiveKey(item.key);
@@ -109,12 +110,10 @@ export function SidebarItem({
         className="flex flex-1 items-center justify-between w-full overflow-hidden"
       >
         {/* 左侧文本 */}
-        <span className="truncate" suppressHydrationWarning>
-          {t(`route.${item.key}`)}
-        </span>
+        <span className="truncate text-[14px] ">{t(`route.${item.key}`)}</span>
 
         {/* 右侧 Badge + Chevron */}
-        <div className="flex items-center gap-1 ml-2 shrink-0">
+        <div className="flex items-center justify-end gap-1 w-[52px]  shrink-0">
           {item.badge && (
             <motion.div
               layout
@@ -125,7 +124,7 @@ export function SidebarItem({
             >
               <Badge
                 variant={item.badgeColor || "secondary"}
-                className="text-[10px] font-medium mb-1 h-4 px-1.5"
+                className="text-[10px] font-medium h-[16px] px-[6px] flex items-center leading-none "
               >
                 {item.badge}
               </Badge>
@@ -136,8 +135,9 @@ export function SidebarItem({
             <motion.span
               animate={{ rotate: isOpen ? 90 : 0 }}
               transition={{ duration: 0.2 }}
+              className="flex items-center justify-center"
             >
-              <ChevronRight size={14} />
+              <ChevronRight size={14} strokeWidth={2} />
             </motion.span>
           )}
         </div>

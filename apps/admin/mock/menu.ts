@@ -1,4 +1,4 @@
-import { Home, Settings, Users } from "lucide-react";
+import { Eclipse, Home, Settings, Users } from "lucide-react";
 
 export interface MenuItem {
   key: string;
@@ -18,6 +18,13 @@ export const menus: MenuItem[] = [
     href: "/dashboard",
     badgeColor: "destructive",
     badge: "NEW",
+  },
+  {
+    key: "tailwind",
+    label: "tailwind",
+    icon: Eclipse,
+    href: "/tailwind",
+    badge: "",
   },
   {
     key: "users",

@@ -8,6 +8,7 @@
   "settings": "系统设置",
   "route": {
     "dashboard": "仪表盘",
+    "tailwind": "tailwind样式",
     "users": "用户管理",
     "UsersList": "用户列表",
     "AdminRole": "管理员角色",
