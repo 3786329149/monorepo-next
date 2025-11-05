@@ -1,13 +1,13 @@
 import { useLayoutStore } from "#/store/useLayoutStore";
 import { Switch } from "@repo/shadcn/components/ui/switch";
 import { Moon, Sun } from "lucide-react";
-import { useTranslation } from "react-i18next";
+import { useTranslations } from "next-intl";
 
 /* 🌗 主题切换 */
 
 export function SwitchTheme() {
   const { darkMode, toggleDark } = useLayoutStore();
-  const { t } = useTranslation();
+  const t = useTranslations();
   return (
     <>
       {darkMode ? <Moon className="w-4 h-4" /> : <Sun className="w-4 h-4" />}

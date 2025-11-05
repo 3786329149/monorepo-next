@@ -10,7 +10,7 @@ import {
 } from "@repo/shadcn/components/ui/sheet";
 
 import { useState } from "react";
-import { useTranslation } from "react-i18next";
+import { useTranslations } from "next-intl";
 
 import { useLayoutStore } from "#/store/useLayoutStore";
 import { Languages, Layout, Moon, Settings, Sun } from "lucide-react";
@@ -20,12 +20,11 @@ import { Button } from "@repo/shadcn/components/ui/button";
 import { Switch } from "@repo/shadcn/components/ui/switch";
 
 export default function SettingsSheet() {
-  const { mode, setMode, darkMode, toggleDark, language, setLanguage } =
-    useLayoutStore();
+  const { mode, setMode, darkMode, toggleDark } = useLayoutStore();
 
   const [open, setOpen] = useState(false);
 
-  const { t } = useTranslation();
+  const t = useTranslations();
 
   const layoutOptions = [
     { label: t("layout_side"), value: "side" },
@@ -93,7 +92,7 @@ export default function SettingsSheet() {
         </div>
 
         {/* 语言切换 */}
-        <div>
+        {/* <div>
           <div className="flex items-center gap-2 mb-3">
             <Languages className="w-4 h-4" />
             <span>{t("language")}</span>
@@ -113,7 +112,7 @@ export default function SettingsSheet() {
               </Button>
             ))}
           </div>
-        </div>
+        </div> */}
       </SheetContent>
     </Sheet>
   );

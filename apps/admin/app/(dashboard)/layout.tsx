@@ -9,6 +9,7 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   const { mode } = useLayoutStore();
+
   // 🧭 三种布局结构
   switch (mode) {
     case "top":

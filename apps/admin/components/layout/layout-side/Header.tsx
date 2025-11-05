@@ -15,6 +15,7 @@ import { SwitchLayout } from "#/components/Switch-Layout";
 
 export default function Header() {
   const { collapsed, toggleCollapsed } = useLayoutStore();
+
   return (
     <header
       className={cn(

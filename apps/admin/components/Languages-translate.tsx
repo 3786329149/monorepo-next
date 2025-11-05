@@ -1,21 +1,34 @@
 "use client";
 
-import { useLayoutStore } from "#/store/useLayoutStore";
-import { Button } from "@repo/shadcn/components/ui/button";
+import { useTransition } from "react";
+import { useRouter } from "next/navigation";
+
+import { setUserLocale } from "#/i18n/action";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@repo/shadcn/components/ui/dropdown-menu";
+import { Button } from "@repo/shadcn/components/ui/button";
 import { Languages } from "lucide-react";
-import { useTranslation } from "react-i18next";
+import { useTranslations } from "next-intl";
 
 /* 🌐 语言切换 */
 
 export function LanguagesTranslate() {
-  const { t } = useTranslation();
-  const { setLanguage } = useLayoutStore();
+  const [isPending, startTransition] = useTransition();
+  const router = useRouter();
+  const t = useTranslations();
+
+  function onChange(locale: string) {
+    startTransition(async () => {
+      await setUserLocale(locale);
+
+      // 让 next-intl 重新加载正确语言
+      setTimeout(() => router.refresh(), 100);
+    });
+  }
 
   return (
     <>
@@ -31,13 +44,13 @@ export function LanguagesTranslate() {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
-          <DropdownMenuItem onClick={() => setLanguage("en-US")}>
+          <DropdownMenuItem onClick={() => onChange("en")}>
             English
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => setLanguage("zh-CN")}>
+          <DropdownMenuItem onClick={() => onChange("zh")}>
             中文
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => setLanguage("ja-JP")}>
+          <DropdownMenuItem onClick={() => onChange("jp")}>
             日本語
           </DropdownMenuItem>
         </DropdownMenuContent>

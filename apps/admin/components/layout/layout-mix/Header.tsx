@@ -12,9 +12,11 @@ import { LanguagesTranslate } from "#/components/Languages-translate";
 import { SwitchTheme } from "#/components/Switch-theme";
 import { UserAvatar } from "#/components/user-avatar";
 import { SwitchLayout } from "#/components/Switch-Layout";
+import { useLocale } from "next-intl";
 
 export default function Header() {
   const { collapsed, toggleCollapsed } = useLayoutStore();
+  const locale = useLocale(); // 当前语言，从 NextIntl Provider 读取
   return (
     <header
       className={cn(

@@ -7,7 +7,8 @@ import { ChevronRight } from "lucide-react";
 import { Badge } from "@repo/shadcn/components/ui/badge";
 import { useLayoutStore } from "#/store/useLayoutStore";
 import { motion } from "framer-motion";
-import { useTranslation } from "react-i18next";
+
+import { useTranslations } from "next-intl";
 
 export interface MenuItem {
   key: string;
@@ -34,7 +35,7 @@ export function SidebarItem({
 }: SidebarItemProps) {
   // 当点击一个菜单项时：如果是父级菜单，就切换 open 状态并写入缓存；如果是子级菜单，就更新“当前激活菜单”的 key。
   const { openKeys, setOpenKeys, activeKey, setActiveKey } = useLayoutStore();
-  const { t } = useTranslation();
+  const t = useTranslations();
 
   const hasChildren = !!item.children?.length;
   const Icon = item.icon;

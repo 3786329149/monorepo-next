@@ -19,7 +19,8 @@ import {
   DropdownMenuTrigger,
 } from "@repo/shadcn/components/ui/dropdown-menu";
 import { MenuItem } from "#/mock/menu";
-import { useTranslation } from "react-i18next";
+
+import { useTranslations } from "next-intl";
 
 interface TopBarItemProps {
   item: MenuItem;
@@ -45,7 +46,7 @@ export function TopBarItem({
 }: TopBarItemProps) {
   const router = useRouter();
 
-  const { t } = useTranslation();
+  const t = useTranslations();
 
   const Icon = item.icon;
 
