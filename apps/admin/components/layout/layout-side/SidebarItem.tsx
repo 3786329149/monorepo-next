@@ -1,5 +1,6 @@
 "use client";
 
+import * as Icons from "lucide-react";
 import { useEffect, useMemo } from "react";
 import Link from "next/link";
 import { cn } from "@repo/shadcn/lib/utils";
@@ -9,6 +10,7 @@ import { useLayoutStore } from "#/store/useLayoutStore";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { MenuItem } from "#/lib/api/user";
+import { getLucideIcon } from "#/components/Lucide-react-icon";
 
 // export interface MenuItem {
 //   key: string;
@@ -39,7 +41,7 @@ export function SidebarItem({
   const t = useTranslations();
 
   const hasChildren = !!item.children?.length;
-  const Icon = item.icon;
+  const Icon = getLucideIcon(item.icon);
 
   const isCurrent = item.path && pathname === item.path;
   const isOpen = openKeys.includes(item.key);

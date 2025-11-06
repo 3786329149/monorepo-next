@@ -10,6 +10,7 @@ import { useMenuStore } from "./useMenuStore";
 interface UserState {
   token: string | null;
   userInfo: UserInfo | null;
+  initialized: Boolean;
   loading: boolean;
 
   login: (data: LoginParams) => Promise<boolean>;
@@ -23,6 +24,7 @@ export const useUserStore = create<UserState>()(
     (set, get) => ({
       token: null,
       userInfo: null,
+      initialized: false,
       loading: false,
 
       /** 登录逻辑 */
@@ -51,15 +53,15 @@ export const useUserStore = create<UserState>()(
         try {
           set({ loading: true });
 
-          const user = await fetchUserInfo();
-          set({ userInfo: user });
+          const data = await fetchUserInfo();
+          set({ userInfo: data, initialized: true });
 
           // 登录后立即获取菜单
           const menuStore = useMenuStore.getState();
           await menuStore.fetchMenuList();
         } catch (err) {
           console.error("❌ 获取用户信息失败", err);
-          set({ userInfo: null });
+          set({ userInfo: null, initialized: false });
         } finally {
           set({ loading: false });
         }

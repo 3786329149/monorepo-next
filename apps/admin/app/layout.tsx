@@ -9,6 +9,8 @@ import ThemeWatcher from "#/provider/theme-providers";
 import { getLocale, getMessages } from "next-intl/server";
 import { NextIntlClientProvider } from "next-intl";
 
+import RefreshBrowserProvider from "#/provider/refresh-browser-providers";
+
 const geist = Geist({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -27,7 +29,9 @@ export default async function RootLayout({
     <html lang={locale} suppressHydrationWarning>
       <body className={geist.className}>
         <NextIntlClientProvider messages={messages}>
-          <ThemeWatcher>{children}</ThemeWatcher>
+          <ThemeWatcher>
+            <RefreshBrowserProvider>{children}</RefreshBrowserProvider>
+          </ThemeWatcher>
         </NextIntlClientProvider>
       </body>
     </html>
