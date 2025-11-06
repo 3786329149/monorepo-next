@@ -13,11 +13,23 @@ import {
 } from "#/constants";
 import { useLayoutStore } from "#/store/useLayoutStore";
 import { SidebarItem } from "./SidebarItem";
-import { menus } from "#/mock/menu";
+import { useMenuStore } from "#/store/useMenuStore";
+import { useUserStore } from "#/store/useUserStore";
+import { useEffect } from "react";
+// import { menus } from "#/mock/menu";
 
 export default function Sidebar() {
   const pathname = usePathname();
   const { collapsed, toggleCollapsed } = useLayoutStore();
+  const { menuList, fetchMenuList } = useMenuStore();
+  const { userInfo } = useUserStore();
+
+  // 初始化记载菜单
+  useEffect(() => {
+    if (userInfo && menuList.length === 0) {
+      fetchMenuList();
+    }
+  }, [userInfo]);
 
   return (
     <motion.aside
@@ -58,9 +70,9 @@ export default function Sidebar() {
           collapsed ? "items-center" : "items-start"
         )}
       >
-        {menus.map((item) => (
+        {menuList.map((item) => (
           <SidebarItem
-            key={item.key}
+            key={item.id}
             item={item}
             collapsed={collapsed}
             pathname={pathname}

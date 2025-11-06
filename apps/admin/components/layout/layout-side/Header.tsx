@@ -12,9 +12,11 @@ import { LanguagesTranslate } from "#/components/Languages-translate";
 import { SwitchTheme } from "#/components/Switch-theme";
 import { UserAvatar } from "#/components/user-avatar";
 import { SwitchLayout } from "#/components/Switch-Layout";
+import { useUserStore } from "#/store/useUserStore";
 
 export default function Header() {
   const { collapsed, toggleCollapsed } = useLayoutStore();
+  const { userInfo, logout } = useUserStore();
 
   return (
     <header
@@ -50,6 +52,9 @@ export default function Header() {
 
         {/* 用户头像 */}
         <UserAvatar />
+
+        <span>{userInfo?.name}</span>
+        <Button onClick={logout}>退出登录</Button>
       </div>
     </header>
   );

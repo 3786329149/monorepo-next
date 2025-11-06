@@ -8,16 +8,17 @@ import { Badge } from "@repo/shadcn/components/ui/badge";
 import { useLayoutStore } from "#/store/useLayoutStore";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
+import { MenuItem } from "#/lib/api/user";
 
-export interface MenuItem {
-  key: string;
-  label: string;
-  icon?: any;
-  href?: string;
-  badge?: string | number;
-  badgeColor?: "default" | "destructive" | "secondary" | "outline";
-  children?: MenuItem[];
-}
+// export interface MenuItem {
+//   key: string;
+//   label: string;
+//   icon?: any;
+//   href?: string;
+//   badge?: string | number;
+//   badgeColor?: "default" | "destructive" | "secondary" | "outline";
+//   children?: MenuItem[];
+// }
 
 interface SidebarItemProps {
   item: MenuItem;
@@ -40,7 +41,7 @@ export function SidebarItem({
   const hasChildren = !!item.children?.length;
   const Icon = item.icon;
 
-  const isCurrent = item.href && pathname === item.href;
+  const isCurrent = item.path && pathname === item.path;
   const isOpen = openKeys.includes(item.key);
 
   // 是否包含激活子项
@@ -48,7 +49,7 @@ export function SidebarItem({
     () =>
       hasChildren &&
       item.children!.some(
-        (c) => pathname === c.href || pathname.startsWith(c.href ?? "")
+        (c) => pathname === c.path || pathname.startsWith(c.path ?? "")
       ),
     [pathname, item.children, hasChildren]
   );
@@ -110,7 +111,9 @@ export function SidebarItem({
         className="flex flex-1 items-center justify-between w-full overflow-hidden"
       >
         {/* 左侧文本 */}
-        <span className="truncate text-[14px] ">{t(`route.${item.key}`)}</span>
+        <span className="truncate text-[14px] ">
+          {t(`route.${item.title}`)}
+        </span>
 
         {/* 右侧 Badge + Chevron */}
         <div className="flex items-center justify-end gap-1 w-[52px]  shrink-0">
@@ -145,8 +148,8 @@ export function SidebarItem({
     </div>
   );
 
-  const itemElement = item.href ? (
-    <Link href={item.href} className="block w-full">
+  const itemElement = item.path ? (
+    <Link href={item.path} className="block w-full">
       {content}
     </Link>
   ) : (
