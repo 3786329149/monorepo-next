@@ -28,11 +28,11 @@ export default async function RootLayout({
   return (
     <html lang={locale} suppressHydrationWarning>
       <body className={geist.className}>
-        <NextIntlClientProvider messages={messages}>
-          <ThemeWatcher>
-            <RefreshBrowserProvider>{children}</RefreshBrowserProvider>
-          </ThemeWatcher>
-        </NextIntlClientProvider>
+        <RefreshBrowserProvider>
+          <NextIntlClientProvider messages={messages}>
+            <ThemeWatcher>{children}</ThemeWatcher>
+          </NextIntlClientProvider>
+        </RefreshBrowserProvider>
       </body>
     </html>
   );

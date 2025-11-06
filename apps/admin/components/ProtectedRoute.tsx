@@ -5,11 +5,11 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 interface Props {
-  permission?: string;
+  permissions?: string[]; // 支持多权限
   children: React.ReactNode;
 }
 
-export default function ProtectedRoute({ permission, children }: Props) {
+export default function ProtectedRoute({ permissions, children }: Props) {
   const router = useRouter();
 
   const { token, userInfo, hasPermission, fetchUser } = useUserStore();
@@ -25,10 +25,12 @@ export default function ProtectedRoute({ permission, children }: Props) {
       return;
     }
 
-    if (permission && !hasPermission(permission)) {
+    if (permissions && !permissions.some((perm) => hasPermission(perm))) {
       router.replace("/403");
     }
-  }, [token, userInfo]);
+  }, [token, userInfo, permissions]);
+
+  if (!token || !userInfo) return <div>加载中...</div>;
 
   return <>{children}</>;
 }

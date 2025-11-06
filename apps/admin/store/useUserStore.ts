@@ -10,6 +10,8 @@ import { useMenuStore } from "./useMenuStore";
 interface UserState {
   token: string | null;
   userInfo: UserInfo | null;
+  roles: string[];
+  permissions: string[];
   initialized: Boolean;
   loading: boolean;
 
@@ -26,6 +28,8 @@ export const useUserStore = create<UserState>()(
       userInfo: null,
       initialized: false,
       loading: false,
+      roles: [],
+      permissions: [],
 
       /** 登录逻辑 */
       async login(data) {
@@ -54,7 +58,12 @@ export const useUserStore = create<UserState>()(
           set({ loading: true });
 
           const data = await fetchUserInfo();
-          set({ userInfo: data, initialized: true });
+          set({
+            userInfo: data,
+            initialized: true,
+            roles: data.roles,
+            permissions: data.permissions,
+          });
 
           // 登录后立即获取菜单
           const menuStore = useMenuStore.getState();

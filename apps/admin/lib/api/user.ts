@@ -3,7 +3,7 @@ import { request } from "./request";
 export interface UserInfo {
   id: string;
   name: string;
-  role: string;
+  roles: string[];
   permissions: string[];
 }
 

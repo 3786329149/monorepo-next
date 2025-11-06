@@ -1,6 +1,5 @@
 "use client";
 
-import * as Icons from "lucide-react";
 import { useEffect, useMemo } from "react";
 import Link from "next/link";
 import { cn } from "@repo/shadcn/lib/utils";
@@ -11,16 +10,6 @@ import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { MenuItem } from "#/lib/api/user";
 import { getLucideIcon } from "#/components/Lucide-react-icon";
-
-// export interface MenuItem {
-//   key: string;
-//   label: string;
-//   icon?: any;
-//   href?: string;
-//   badge?: string | number;
-//   badgeColor?: "default" | "destructive" | "secondary" | "outline";
-//   children?: MenuItem[];
-// }
 
 interface SidebarItemProps {
   item: MenuItem;
@@ -58,19 +47,14 @@ export function SidebarItem({
 
   // 自动展开当前激活子菜单
   useEffect(() => {
-    if (hasActiveChild && !isOpen) {
-      setOpenKeys([...openKeys, item.key]);
-    }
+    if (hasActiveChild && !isOpen) setOpenKeys([...openKeys, item.key]);
   }, [hasActiveChild]);
 
   const handleToggle = () => {
     if (!hasChildren) return;
 
-    if (isOpen) {
-      setOpenKeys(openKeys.filter((k) => k !== item.key));
-    } else {
-      setOpenKeys([...openKeys, item.key]);
-    }
+    if (isOpen) setOpenKeys(openKeys.filter((k) => k !== item.key));
+    else setOpenKeys([...openKeys, item.key]);
   };
 
   const handleClick = (e: React.MouseEvent) => {

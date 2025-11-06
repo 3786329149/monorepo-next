@@ -8,7 +8,7 @@ export async function GET() {
     data: {
       id: "u001",
       name: "Ann",
-      role: "admin",
+      roles: ["admin"],
       permissions: ["dashboard:view", "users:edit", "settings:access"],
     },
   });
