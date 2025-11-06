@@ -5,9 +5,9 @@ export default function permissionsPage() {
   return (
     <div>
       <h1>Permissions Page</h1>
-      <PermissionAction code="user:delete">
+      {/*<PermissionAction code="user:delete">
         <Button>删除用户</Button>
-      </PermissionAction>
+      </PermissionAction> */}
     </div>
   );
 }

@@ -10,6 +10,12 @@ import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { MenuItem } from "#/lib/api/user";
 import { getLucideIcon } from "#/components/Lucide-react-icon";
+import {
+  Tooltip,
+  TooltipTrigger,
+  TooltipContent,
+} from "@repo/shadcn/components/ui/tooltip";
+import { SidebarTooltipItem } from "./SidebarTooltipItem";
 
 interface SidebarItemProps {
   item: MenuItem;
@@ -141,6 +147,52 @@ export function SidebarItem({
   ) : (
     content
   );
+
+  if (collapsed) {
+    return (
+      <Tooltip delayDuration={150}>
+        <TooltipTrigger asChild>{itemElement}</TooltipTrigger>
+        <TooltipContent
+          side="right"
+          align="start"
+          className={cn(
+            "p-0 rounded-lg border shadow-md backdrop-blur-sm",
+            "bg-popover text-popover-foreground"
+          )}
+        >
+          <div className="min-w-[160px] text-sm">
+            <div
+              className={cn(
+                "px-3 py-2 font-medium",
+                hasChildren ? "border-b" : undefined
+              )}
+            >
+              {t(`route.${item.title}`)}
+            </div>
+
+            {hasChildren &&
+              item.children!.map((child) => (
+                <SidebarTooltipItem
+                  key={child.key}
+                  child={child}
+                  level={level + 1}
+                />
+                // <Link
+                //   key={child.key}
+                //   href={child.path || "#"}
+                //   className={cn(
+                //     "block px-3 py-1.5 hover:bg-accent",
+                //     pathname === child.path && "bg-primary/10 text-primary"
+                //   )}
+                // >
+                //   {t(`route.${child.title}`)}
+                // </Link>
+              ))}
+          </div>
+        </TooltipContent>
+      </Tooltip>
+    );
+  }
 
   return (
     <div>
