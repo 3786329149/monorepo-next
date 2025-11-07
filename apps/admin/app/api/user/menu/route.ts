@@ -1,5 +1,8 @@
 import { NextResponse } from "next/server";
 
+//   1 如果菜单项有 roles 字段，则用户至少有一个角色匹配才能显示。
+//   2 如果菜单项有 permissions 字段，则用户至少有一个权限匹配才能显示。
+//   3 都没有限制则默认显示。支持 递归子菜单。
 export async function GET() {
   return NextResponse.json({
     code: 0,
@@ -13,21 +16,14 @@ export async function GET() {
         icon: "Home",
         badgeColor: "",
         badge: "new",
-        permission: "dashboard:view",
-      },
-      {
-        id: "4",
-        key: "4",
-        title: "Tailwind",
-        icon: "Eclipse",
-        path: "/tailwind",
-        badge: "",
+        // 这里没有permission和role字段 所以都能显示
       },
       {
         id: "2",
         key: "2",
         title: "Users",
         icon: "Users",
+        roles: ["admin", "develop"], // 这里采用了方法一 利用roles字段 只要用户 use.roles = ["develop" || "admin"]
         children: [
           {
             id: "2-1",
@@ -44,6 +40,7 @@ export async function GET() {
                 path: "/users/list/admin",
                 badgeColor: "default",
                 badge: "10",
+                roles: ["admin"],
               },
               {
                 id: "2-1-2",
@@ -52,6 +49,9 @@ export async function GET() {
                 path: "/users/list/develop",
                 badgeColor: "outline",
                 badge: "20",
+                // 这里采用的是方式二 permission 所以只要让用户的permissions添加"users:view" 就可以显示菜单了
+                // user.permission = [xxx,"dashboard:view",xxx]
+                permission: ["users:view"],
               },
             ],
           },
@@ -69,7 +69,23 @@ export async function GET() {
         title: "Settings",
         path: "/settings",
         icon: "Settings",
-        permission: "setting:access",
+        roles: ["admin", "manager", "develop"],
+      },
+      {
+        id: "4",
+        key: "4",
+        title: "Tailwind",
+        icon: "Eclipse",
+        path: "/tailwind",
+        badge: "",
+        roles: ["admin", "develop", "manager"],
+      },
+      {
+        id: "5",
+        key: "5",
+        title: "Guest Page",
+        path: "/guest",
+        roles: ["guest"],
       },
     ],
   });

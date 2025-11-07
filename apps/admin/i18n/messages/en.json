@@ -8,7 +8,7 @@
   "settings": "System Settings",
   "route": {
     "Dashboard": "dashboard",
-    "Tailwind": "Tailwind",
+    "Tailwind": "Tailwind Tool",
     "Users": "users",
     "Users List": "User List",
     "Admin Role": "Admin Role",
@@ -16,6 +16,7 @@
     "Permission": "Permissions",
     "Settings": "Settings",
     "General": "General",
-    "Profile": "Profile"
+    "Profile": "Profile",
+    "Guest Page": "Guest Page"
   }
 }

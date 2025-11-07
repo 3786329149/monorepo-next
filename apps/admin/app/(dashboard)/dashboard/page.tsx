@@ -1,4 +1,3 @@
-import ProtectedRoute from "#/components/ProtectedRoute";
 import {
   Card,
   CardContent,
@@ -8,8 +7,9 @@ import {
 
 export default function DashboardPage() {
   return (
-    <ProtectedRoute permission="dashboard:view">
+    <div>
       <h1>欢迎来到仪表盘</h1>
+
       <div className="grid gap-4 md:grid-cols-3">
         {[1, 2, 3].map((i) => (
           <Card key={i}>
@@ -22,6 +22,6 @@ export default function DashboardPage() {
           </Card>
         ))}
       </div>
-    </ProtectedRoute>
+    </div>
   );
 }

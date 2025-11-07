@@ -8,7 +8,7 @@
   "settings": "系统设置",
   "route": {
     "Dashboard": "仪表盘",
-    "Tailwind": "Tailwind 样式",
+    "Tailwind": "Tailwind Tool",
     "Users": "用户管理",
     "Users List": "用户列表",
     "Admin Role": "管理员角色",
@@ -16,6 +16,7 @@
     "Permission": "权限管理",
     "Settings": "设置",
     "General": "通用设置",
-    "Profile": "个人资料"
+    "Profile": "个人资料",
+    "Guest Page": "临时"
   }
 }

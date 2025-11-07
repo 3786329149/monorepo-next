@@ -18,7 +18,11 @@ interface UserState {
   login: (data: LoginParams) => Promise<boolean>;
   fetchUser: () => Promise<void>;
   logout: () => void;
-  hasPermission: (key: string) => boolean;
+
+  // 权限判断逻辑
+  hasRole: (role: string | string[]) => boolean;
+  hasPermission: (perm: string | string[]) => boolean;
+  hasAccess: (roles?: string[], perms?: string[]) => boolean;
 }
 
 export const useUserStore = create<UserState>()(
@@ -89,9 +93,41 @@ export const useUserStore = create<UserState>()(
         window.location.href = "/login";
       },
 
-      hasPermission(key) {
+      /**
+       * 检查是否拥有角色（支持单个或多个）
+       */
+      hasRole(role) {
         const user = get().userInfo;
-        return !!user?.permissions.includes(key);
+        if (!user) return false;
+        const roles = Array.isArray(role) ? role : [role];
+        return roles.some((r) => user.roles.includes(r));
+      },
+
+      /**
+       * 检查是否拥有权限（支持单个或多个）
+       */
+      hasPermission(perm) {
+        const user = get().userInfo;
+        if (!user) return false;
+        const perms = Array.isArray(perm) ? perm : [perm];
+        return perms.some((p) => user.permissions.includes(p));
+      },
+
+      /**
+       * 综合判断（比如页面访问、按钮展示等）
+       */
+      hasAccess(roles, perms) {
+        const user = get().userInfo;
+        if (!user) return false;
+
+        // 如果没指定要求，则默认有权限
+        if (!roles && !perms) return true;
+
+        const roleMatch = !roles || roles.some((r) => user.roles.includes(r));
+        const permMatch =
+          !perms || perms.some((p) => user.permissions.includes(p));
+
+        return roleMatch && permMatch;
       },
     }),
     {

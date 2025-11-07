@@ -15,7 +15,8 @@ export interface MenuItem {
   icon?: any;
   badge?: string | number;
   badgeColor?: "default" | "destructive" | "secondary" | "outline";
-  permissions?: string;
+  permissions?: string[];
+  roles?: string[];
   children?: MenuItem[];
 }
 
