@@ -100,9 +100,7 @@ export function SidebarItem({
         className="flex flex-1 items-center justify-between w-full overflow-hidden"
       >
         {/* 左侧文本 */}
-        <span className="truncate text-[14px] ">
-          {t(`route.${item.title}`)}
-        </span>
+        <span className="truncate ">{t(`route.${item.title}`)}</span>
 
         {/* 右侧 Badge + Chevron */}
         <div className="flex items-center justify-end gap-1 w-[52px]  shrink-0">
@@ -116,7 +114,7 @@ export function SidebarItem({
             >
               <Badge
                 variant={item.badgeColor || "secondary"}
-                className="text-[10px] font-medium h-[16px] px-[6px] flex items-center leading-none "
+                className="text-[10px] font-medium h-[16px] px-[6px] flex items-center leading-none"
               >
                 {item.badge}
               </Badge>
@@ -150,14 +148,22 @@ export function SidebarItem({
     if (!hasChildren) {
       return (
         <HoverPopover
-          trigger={itemElement}
-          content={
-            <div className="px-3 py-2 text-sm font-medium">
-              {t(`route.${item.title}`)}
-            </div>
-          }
           side="right"
           align="center"
+          trigger={itemElement}
+          content={
+            <div className="flex items-center justify-between  px-3 py-2 text-sm font-medium">
+              <span className="truncate">{t(`route.${item.title}`)}</span>
+              {item.badge && (
+                <Badge
+                  variant={item.badgeColor || "secondary"}
+                  className="text-[10px] h-5 px-2"
+                >
+                  {item.badge}
+                </Badge>
+              )}
+            </div>
+          }
         />
       );
     }
@@ -168,7 +174,7 @@ export function SidebarItem({
         content={
           <div className="min-w-[180px] py-1">
             <div className="px-3 py-2 font-medium border-b text-sm">
-              {t(`route.${item.title}`)}
+              <span className="truncate">{t(`route.${item.title}`)}</span>
             </div>
             {item.children!.map((child) => (
               <SidebarPopoverItem

@@ -9,16 +9,10 @@ import { useLayoutStore } from "#/store/useLayoutStore";
 import { motion } from "framer-motion";
 
 import { useTranslations } from "next-intl";
-
-export interface MenuItem {
-  key: string;
-  label: string;
-  icon?: any;
-  href?: string;
-  badge?: string | number;
-  badgeColor?: "default" | "destructive" | "secondary" | "outline";
-  children?: MenuItem[];
-}
+import { MenuItem } from "#/lib/api/user";
+import { HoverPopover } from "#/components/HoverPopover";
+import { SidebarPopoverItem } from "../layout-side/SidebarPopoverItem";
+import { getLucideIcon } from "#/components/Lucide-react-icon";
 
 interface SidebarItemProps {
   item: MenuItem;
@@ -38,9 +32,9 @@ export function SidebarItem({
   const t = useTranslations();
 
   const hasChildren = !!item.children?.length;
-  const Icon = item.icon;
+  const Icon = getLucideIcon(item.icon);
 
-  const isCurrent = item.href && pathname === item.href;
+  const isCurrent = item.path && pathname === item.path;
   const isOpen = openKeys.includes(item.key);
 
   // 是否包含激活子项
@@ -48,26 +42,21 @@ export function SidebarItem({
     () =>
       hasChildren &&
       item.children!.some(
-        (c) => pathname === c.href || pathname.startsWith(c.href ?? "")
+        (c) => pathname === c.path || pathname.startsWith(c.path ?? "")
       ),
     [pathname, item.children, hasChildren]
   );
 
   // 自动展开当前激活子菜单
   useEffect(() => {
-    if (hasActiveChild && !isOpen) {
-      setOpenKeys([...openKeys, item.key]);
-    }
+    if (hasActiveChild && !isOpen) setOpenKeys([...openKeys, item.key]);
   }, [hasActiveChild]);
 
   const handleToggle = () => {
     if (!hasChildren) return;
 
-    if (isOpen) {
-      setOpenKeys(openKeys.filter((k) => k !== item.key));
-    } else {
-      setOpenKeys([...openKeys, item.key]);
-    }
+    if (isOpen) setOpenKeys(openKeys.filter((k) => k !== item.key));
+    else setOpenKeys([...openKeys, item.key]);
   };
 
   const handleClick = (e: React.MouseEvent) => {
@@ -110,13 +99,11 @@ export function SidebarItem({
         className="flex flex-1 items-center  justify-between w-full overflow-hidden"
       >
         {/* 左侧文本 */}
-        {/* <span className="truncate">{item.label}</span> */}
-        <span className="truncate" suppressHydrationWarning>
-          {t(`route.${item.key}`)}
-        </span>
+
+        <span className="truncate text-[14px]">{t(`route.${item.title}`)}</span>
 
         {/* 右侧 Badge + Chevron */}
-        <div className="flex items-center gap-1 ml-2 shrink-0">
+        <div className="flex items-center justify-end gap-1 w-[52px]  shrink-0">
           {item.badge && (
             <motion.div
               layout
@@ -127,7 +114,7 @@ export function SidebarItem({
             >
               <Badge
                 variant={item.badgeColor || "secondary"}
-                className="ml-auto text-[10px] font-medium mb-1 h-4 px-1.5"
+                className="text-[10px] font-medium h-[16px] px-[6px] flex items-center leading-none"
               >
                 {item.badge}
               </Badge>
@@ -138,9 +125,9 @@ export function SidebarItem({
             <motion.span
               animate={{ rotate: isOpen ? 90 : 0 }}
               transition={{ duration: 0.2 }}
-              className="ml-1"
+              className="flex items-center justify-center"
             >
-              <ChevronRight size={14} />
+              <ChevronRight size={14} strokeWidth={2} />
             </motion.span>
           )}
         </div>
@@ -148,13 +135,61 @@ export function SidebarItem({
     </div>
   );
 
-  const itemElement = item.href ? (
-    <Link href={item.href} className="block w-full">
+  const itemElement = item.path ? (
+    <Link href={item.path} className="block w-full">
       {content}
     </Link>
   ) : (
     content
   );
+
+  /** 折叠状态下使用 Popover 悬浮显示 */
+  if (collapsed) {
+    if (!hasChildren) {
+      return (
+        <HoverPopover
+          side="right"
+          align="center"
+          trigger={itemElement}
+          content={
+            <div className="flex items-center justify-between  px-3 py-2 text-sm font-medium">
+              <span className="truncate">{t(`route.${item.title}`)}</span>
+              {item.badge && (
+                <Badge
+                  variant={item.badgeColor || "secondary"}
+                  className="text-[10px] h-5 px-2"
+                >
+                  {item.badge}
+                </Badge>
+              )}
+            </div>
+          }
+        />
+      );
+    }
+
+    return (
+      <HoverPopover
+        trigger={itemElement}
+        content={
+          <div className="min-w-[180px] py-1">
+            <div className="px-3 py-2 font-medium border-b text-sm">
+              {t(`route.${item.title}`)}
+            </div>
+            {item.children!.map((child) => (
+              <SidebarPopoverItem
+                key={child.key}
+                item={child}
+                level={level + 1}
+              />
+            ))}
+          </div>
+        }
+        side="right"
+        align="start"
+      />
+    );
+  }
 
   return (
     <div>

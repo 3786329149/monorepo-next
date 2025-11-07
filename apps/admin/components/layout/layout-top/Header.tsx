@@ -6,18 +6,30 @@ import { motion } from "framer-motion";
 import { TopBarItem } from "./TopBarItem";
 import { HEADER_HEIGHT } from "#/constants";
 import { useLayoutStore } from "#/store/useLayoutStore";
-import { menus } from "#/mock/menu";
+// import { menus } from "#/mock/menu";
 
 import SettingsSheet from "#/components/SettingsSheet";
 import { LanguagesTranslate } from "#/components/Languages-translate";
 import { SwitchTheme } from "#/components/Switch-theme";
 import { UserAvatar } from "#/components/user-avatar";
 import { SwitchLayout } from "#/components/Switch-Layout";
+import { useMenuStore } from "#/store/useMenuStore";
+import { useUserStore } from "#/store/useUserStore";
+import { useEffect } from "react";
 
 export default function Header() {
   const router = useRouter();
   const pathname = usePathname();
   const { activeKey, setActiveKey } = useLayoutStore();
+  const { menuList, fetchMenuList } = useMenuStore();
+  const { userInfo } = useUserStore();
+
+  // 初始化记载菜单
+  useEffect(() => {
+    if (userInfo && menuList.length === 0) {
+      fetchMenuList();
+    }
+  }, [userInfo]);
 
   return (
     <motion.header
@@ -37,7 +49,7 @@ export default function Header() {
 
       {/* 中间菜单栏 */}
       <div className="flex gap-1 items-center">
-        {menus.map((item) => (
+        {menuList.map((item) => (
           <TopBarItem
             key={item.key}
             item={item}

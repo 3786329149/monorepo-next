@@ -18,8 +18,10 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@repo/shadcn/components/ui/dropdown-menu";
-import { MenuItem } from "#/mock/menu";
+
 import { useTranslations } from "next-intl";
+import { MenuItem } from "#/lib/api/user";
+import { getLucideIcon } from "#/components/Lucide-react-icon";
 
 interface TopBarItemProps {
   item: MenuItem;
@@ -30,7 +32,7 @@ interface TopBarItemProps {
 
 /** 🔍 递归检测 pathname 是否在当前菜单的子树中 */
 function hasActiveChild(item: MenuItem, pathname: string): boolean {
-  if (item.href && pathname.startsWith(item.href)) return true;
+  if (item.path && pathname.startsWith(item.path)) return true;
   if (item.children) {
     return item.children.some((child) => hasActiveChild(child, pathname));
   }
@@ -46,11 +48,11 @@ export function TopBarItem({
   const router = useRouter();
   const t = useTranslations();
 
-  const Icon = item.icon;
+  const Icon = getLucideIcon(item.icon);
 
   // 判断当前项是否处于激活状态
   const isActive =
-    pathname === item.href ||
+    pathname === item.path ||
     activeKey === item.key ||
     hasActiveChild(item, pathname);
 
@@ -73,7 +75,7 @@ export function TopBarItem({
                 isChildActive && "text-primary font-medium"
               )}
             >
-              {t(`route.${child.key}`)}
+              {t(`route.${child.title}`)}
               {child.badge && (
                 <Badge
                   variant={child.badgeColor || "secondary"}
@@ -93,13 +95,13 @@ export function TopBarItem({
       return (
         <DropdownMenuItem
           key={child.key}
-          onClick={() => handleClick(child.href, child.key)}
+          onClick={() => handleClick(child.path, child.key)}
           className={cn(
             "flex items-center justify-between gap-2",
             isChildActive && "text-primary font-medium bg-muted"
           )}
         >
-          {t(`route.${child.key}`)}
+          {t(`route.${child.title}`)}
 
           {child.badge && (
             <Badge
@@ -129,7 +131,7 @@ export function TopBarItem({
             >
               {Icon && <Icon size={18} />}
 
-              {t(`route.${item.key}`)}
+              {t(`route.${item.title}`)}
 
               {item.badge && (
                 <Badge
@@ -154,7 +156,7 @@ export function TopBarItem({
     <motion.div whileHover={{ scale: 1.05 }}>
       <Button
         variant="ghost"
-        onClick={() => handleClick(item.href, item.key)}
+        onClick={() => handleClick(item.path, item.key)}
         className={cn(
           "flex items-center gap-1",
           isActive &&
@@ -163,7 +165,7 @@ export function TopBarItem({
       >
         {Icon && <Icon size={18} />}
 
-        {t(`route.${item.key}`)}
+        {t(`route.${item.title}`)}
         {item.badge && (
           <Badge
             variant={item.badgeColor || "secondary"}

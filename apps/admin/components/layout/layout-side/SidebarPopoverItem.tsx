@@ -5,14 +5,9 @@ import { usePathname } from "next/navigation";
 import { HoverPopover } from "#/components/HoverPopover";
 import { getLucideIcon } from "#/components/Lucide-react-icon";
 import { useTranslations } from "next-intl";
-
-interface MenuItem {
-  id: string;
-  title: string;
-  icon?: string;
-  path?: string;
-  children?: MenuItem[];
-}
+import { MenuItem } from "#/lib/api/user";
+import { Badge } from "@repo/shadcn/components/ui/badge";
+import { ChevronRight } from "lucide-react";
 
 export function SidebarPopoverItem({
   item,
@@ -37,10 +32,26 @@ export function SidebarPopoverItem({
       style={{ paddingLeft: `${level * 12}px` }}
     >
       <div className="flex items-center gap-2">
-        {Icon && <Icon size={16} />}
-        {t(`route.${item.title}`)}
+        {Icon && <Icon size={16} className="shrink-0" />}
+        <span className="truncate">{t(`route.${item.title}`)}</span>
       </div>
-      {hasChildren && <span className="text-muted-foreground">›</span>}
+
+      <div className="flex items-center gap-2 ml-2 shrink-0">
+        {/* badge */}
+        {item.badge && (
+          <Badge
+            variant={item.badgeColor || "secondary"}
+            className="text-[10px] h-5 px-2"
+          >
+            {item.badge}
+          </Badge>
+        )}
+        {/* 子菜单箭头 */}
+        {/* {hasChildren && <span className="text-muted-foreground">›</span>} */}
+        {hasChildren && (
+          <ChevronRight size={14} className="text-muted-foreground" />
+        )}
+      </div>
     </div>
   );
 

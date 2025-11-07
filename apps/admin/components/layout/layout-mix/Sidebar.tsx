@@ -3,15 +3,26 @@
 import { usePathname } from "next/navigation";
 import { cn } from "@repo/shadcn/lib/utils";
 
-import { Home, Menu, Settings, Users } from "lucide-react";
+import { Menu } from "lucide-react";
 import { FOOTER_HEIGHT } from "#/constants";
 import { useLayoutStore } from "#/store/useLayoutStore";
 import { SidebarItem } from "./SidebarItem";
-import { menus } from "#/mock/menu";
+import { useMenuStore } from "#/store/useMenuStore";
+import { useEffect } from "react";
+import { useUserStore } from "#/store/useUserStore";
 
 export default function Sidebar() {
   const pathname = usePathname();
   const { collapsed, toggleCollapsed } = useLayoutStore();
+  const { menuList, fetchMenuList } = useMenuStore();
+  const { userInfo } = useUserStore();
+
+  // 初始化记载菜单
+  useEffect(() => {
+    if (userInfo && menuList.length === 0) {
+      fetchMenuList();
+    }
+  }, [userInfo]);
 
   return (
     <div className="flex flex-col h-full">
@@ -22,7 +33,7 @@ export default function Sidebar() {
           collapsed ? "items-center" : "items-start"
         )}
       >
-        {menus.map((item) => (
+        {menuList.map((item) => (
           <SidebarItem
             key={item.key}
             item={item}

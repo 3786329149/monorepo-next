@@ -72,7 +72,7 @@ export default function Sidebar() {
       >
         {menuList.map((item) => (
           <SidebarItem
-            key={item.id}
+            key={item.key}
             item={item}
             collapsed={collapsed}
             pathname={pathname}
