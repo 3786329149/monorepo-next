@@ -10,12 +10,9 @@ import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { MenuItem } from "#/lib/api/user";
 import { getLucideIcon } from "#/components/Lucide-react-icon";
-import {
-  Tooltip,
-  TooltipTrigger,
-  TooltipContent,
-} from "@repo/shadcn/components/ui/tooltip";
-import { SidebarTooltipItem } from "./SidebarTooltipItem";
+
+import { SidebarPopoverItem } from "./SidebarPopoverItem";
+import { HoverPopover } from "#/components/HoverPopover";
 
 interface SidebarItemProps {
   item: MenuItem;
@@ -148,49 +145,43 @@ export function SidebarItem({
     content
   );
 
+  /** 折叠状态下使用 Popover 悬浮显示 */
   if (collapsed) {
-    return (
-      <Tooltip delayDuration={150}>
-        <TooltipTrigger asChild>{itemElement}</TooltipTrigger>
-        <TooltipContent
-          side="right"
-          align="start"
-          className={cn(
-            "p-0 rounded-lg border shadow-md backdrop-blur-sm",
-            "bg-popover text-popover-foreground"
-          )}
-        >
-          <div className="min-w-[160px] text-sm">
-            <div
-              className={cn(
-                "px-3 py-2 font-medium",
-                hasChildren ? "border-b" : undefined
-              )}
-            >
+    if (!hasChildren) {
+      return (
+        <HoverPopover
+          trigger={itemElement}
+          content={
+            <div className="px-3 py-2 text-sm font-medium">
               {t(`route.${item.title}`)}
             </div>
+          }
+          side="right"
+          align="center"
+        />
+      );
+    }
 
-            {hasChildren &&
-              item.children!.map((child) => (
-                <SidebarTooltipItem
-                  key={child.key}
-                  child={child}
-                  level={level + 1}
-                />
-                // <Link
-                //   key={child.key}
-                //   href={child.path || "#"}
-                //   className={cn(
-                //     "block px-3 py-1.5 hover:bg-accent",
-                //     pathname === child.path && "bg-primary/10 text-primary"
-                //   )}
-                // >
-                //   {t(`route.${child.title}`)}
-                // </Link>
-              ))}
+    return (
+      <HoverPopover
+        trigger={itemElement}
+        content={
+          <div className="min-w-[180px] py-1">
+            <div className="px-3 py-2 font-medium border-b text-sm">
+              {t(`route.${item.title}`)}
+            </div>
+            {item.children!.map((child) => (
+              <SidebarPopoverItem
+                key={child.key}
+                item={child}
+                level={level + 1}
+              />
+            ))}
           </div>
-        </TooltipContent>
-      </Tooltip>
+        }
+        side="right"
+        align="start"
+      />
     );
   }
 
