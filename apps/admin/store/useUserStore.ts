@@ -2,9 +2,9 @@
 
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import type { UserInfo } from "#/lib/api/user";
-import { fetchUserInfo } from "#/lib/api/user";
-import { loginApi, LoginParams } from "#/lib/api/auth";
+import type { UserInfo } from "#/api/user";
+import { fetchUserInfo } from "#/api/user";
+import { loginApi, LoginParams } from "#/api/auth";
 import { useMenuStore } from "./useMenuStore";
 
 interface UserState {

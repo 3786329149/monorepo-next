@@ -1,5 +1,43 @@
 import { NextRequest, NextResponse } from "next/server";
 
+const adminPermissions = [
+  "dashboard:view",
+  "dashboard:edit",
+  "users:view",
+  "users:edit",
+  "users:add",
+  "users:delete",
+  "settings:access",
+  "tailwind:view",
+  "role:view",
+  "menu:view",
+  "department:view",
+];
+
+const developPermissions = [
+  "dashboard:view",
+  "users:view",
+  "users:edit",
+  "users:delete",
+  "settings:view",
+  "tailwind:view",
+  "role:view",
+  "menu:view",
+  "department:view",
+];
+
+const managerPermissions = [
+  "dashboard:view",
+  "dashboard:edit",
+  "users:view",
+  "users:edit",
+  "settings:access",
+  "tailwind:view",
+  "role:view",
+  "menu:view",
+  "department:view",
+];
+
 // 模拟用户数据表
 const userInfo = [
   {
@@ -7,30 +45,14 @@ const userInfo = [
     name: "Ann",
     token: "mock-token-admin",
     role: ["admin"],
-    permissions: [
-      "dashboard:view",
-      "dashboard:edit",
-      "users:view",
-      "users:edit",
-      "users:add",
-      "users:delete",
-      "settings:access",
-      "tailwind:view",
-    ],
+    permissions: adminPermissions,
   },
   {
     id: "u002",
     name: "AnnJimmy",
     token: "mock-token-develop",
     role: ["develop"],
-    permissions: [
-      "dashboard:view",
-      "users:view",
-      "users:edit",
-      "users:delete",
-      "settings:view",
-      "tailwind:view",
-    ],
+    permissions: developPermissions,
   },
   {
     id: "u003",
@@ -56,14 +78,7 @@ const userInfo = [
     name: "AnnT",
     token: "mock-token-manager",
     role: ["manager", "develop", "admin"],
-    permissions: [
-      "dashboard:view",
-      "dashboard:edit",
-      "users:view",
-      "users:edit",
-      "settings:access",
-      "tailwind:view",
-    ],
+    permissions: managerPermissions,
   },
 ];
 

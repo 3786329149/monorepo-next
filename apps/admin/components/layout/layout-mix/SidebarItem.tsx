@@ -9,7 +9,7 @@ import { useLayoutStore } from "#/store/useLayoutStore";
 import { motion } from "framer-motion";
 
 import { useTranslations } from "next-intl";
-import { MenuItem } from "#/lib/api/user";
+import { MenuItem } from "#/api/user";
 import { HoverPopover } from "#/components/HoverPopover";
 import { SidebarPopoverItem } from "../layout-side/SidebarPopoverItem";
 import { getLucideIcon } from "#/components/Lucide-react-icon";

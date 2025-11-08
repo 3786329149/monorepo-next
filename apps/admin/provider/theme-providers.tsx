@@ -1,6 +1,6 @@
 "use client";
 
-import { useLayoutStore } from "../store/useLayoutStore";
+import { useLayoutStore } from "#/store/useLayoutStore";
 import { useEffect } from "react";
 
 export default function ThemeWatcher({

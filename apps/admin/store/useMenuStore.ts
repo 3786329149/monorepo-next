@@ -1,4 +1,4 @@
-import { fetchUserMenus, MenuItem } from "#/lib/api/user";
+import { fetchUserMenus, MenuItem } from "#/api/user";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { useUserStore } from "./useUserStore";

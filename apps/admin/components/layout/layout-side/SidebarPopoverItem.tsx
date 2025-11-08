@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { HoverPopover } from "#/components/HoverPopover";
 import { getLucideIcon } from "#/components/Lucide-react-icon";
 import { useTranslations } from "next-intl";
-import { MenuItem } from "#/lib/api/user";
+import { MenuItem } from "#/api/user";
 import { Badge } from "@repo/shadcn/components/ui/badge";
 import { ChevronRight } from "lucide-react";
 

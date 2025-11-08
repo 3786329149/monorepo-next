@@ -14,9 +14,15 @@
     "Admin Role": "Admin Role",
     "Develop Role": "Develop Role",
     "Permission": "Permissions",
-    "Settings": "Settings",
+    "Settings": "System Settings",
     "General": "General",
     "Profile": "Profile",
-    "Guest Page": "Guest Page"
+    "Guest Page": "Guest Page",
+    "Departments": "Departments",
+    "Departments Add": "Departments Add",
+    "Departments List": "Departments List",
+    "Roles": "Roles",
+    "Menus": "Menus",
+    "Organization": "organization"
   }
 }

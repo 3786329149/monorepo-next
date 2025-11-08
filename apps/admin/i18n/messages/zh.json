@@ -14,9 +14,15 @@
     "Admin Role": "管理员角色",
     "Develop Role": "开发者角色",
     "Permission": "权限管理",
-    "Settings": "设置",
+    "Settings": "系统设置",
     "General": "通用设置",
     "Profile": "个人资料",
-    "Guest Page": "临时"
+    "Guest Page": "临时",
+    "Departments": "部门管理",
+    "Departments Add": "部门管理 新增",
+    "Departments List": "部门管理 列表",
+    "Roles": "角色管理",
+    "Menus": "菜单管理",
+    "Organization": "系统架构"
   }
 }

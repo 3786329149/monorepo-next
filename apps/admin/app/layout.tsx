@@ -11,6 +11,8 @@ import { NextIntlClientProvider } from "next-intl";
 
 import RefreshBrowserProvider from "#/provider/refresh-browser-providers";
 
+import { Toaster } from "@repo/shadcn/components/ui/sonner";
+
 const geist = Geist({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -28,6 +30,7 @@ export default async function RootLayout({
   return (
     <html lang={locale} suppressHydrationWarning>
       <body className={geist.className}>
+        <Toaster />
         <RefreshBrowserProvider>
           <NextIntlClientProvider messages={messages}>
             <ThemeWatcher>{children}</ThemeWatcher>

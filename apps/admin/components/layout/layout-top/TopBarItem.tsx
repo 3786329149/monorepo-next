@@ -20,7 +20,7 @@ import {
 } from "@repo/shadcn/components/ui/dropdown-menu";
 
 import { useTranslations } from "next-intl";
-import { MenuItem } from "#/lib/api/user";
+import { MenuItem } from "#/api/user";
 import { getLucideIcon } from "#/components/Lucide-react-icon";
 
 interface TopBarItemProps {

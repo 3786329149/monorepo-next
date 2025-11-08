@@ -8,7 +8,7 @@ import { Badge } from "@repo/shadcn/components/ui/badge";
 import { useLayoutStore } from "#/store/useLayoutStore";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
-import { MenuItem } from "#/lib/api/user";
+import { MenuItem } from "#/api/user";
 import { getLucideIcon } from "#/components/Lucide-react-icon";
 
 import { SidebarPopoverItem } from "./SidebarPopoverItem";

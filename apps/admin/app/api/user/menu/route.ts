@@ -18,6 +18,38 @@ export async function GET() {
         badge: "new",
         // 这里没有permission和role字段 所以都能显示
       },
+
+      {
+        id: "9",
+        key: "9",
+        title: "Organization",
+        icon: "Building2",
+        path: "/organization",
+        children: [
+          {
+            id: "9-1",
+            key: "9-1",
+            title: "Departments",
+            path: "/organization/departments",
+            icon: "FolderTree",
+          },
+          {
+            id: "9-2",
+            key: "9-2",
+            title: "Roles",
+            path: "/organization/roles",
+            icon: "UserCog",
+          },
+          {
+            id: "9-3",
+            key: "9-3",
+            title: "Users",
+            path: "/organization/users",
+            icon: "Users2",
+          },
+        ],
+      },
+
       {
         id: "2",
         key: "2",
@@ -63,6 +95,47 @@ export async function GET() {
           },
         ],
       },
+
+      {
+        id: "6",
+        key: "departments",
+        title: "Departments",
+        icon: "Building",
+        path: "/departments",
+        roles: ["admin", "manager"],
+        children: [
+          {
+            id: "6-1",
+            key: "departments-list",
+            title: "Departments List",
+            path: "/departments/list",
+            permissions: ["departments:view"],
+          },
+          {
+            id: "6-2",
+            key: "departments-new",
+            title: "Departments Add",
+            path: "/departments/new",
+            permissions: ["departments:create"],
+          },
+        ],
+      },
+      {
+        id: "7",
+        key: "roles",
+        title: "Roles",
+        icon: "Shield",
+        roles: ["admin"],
+        path: "/roles",
+      },
+      {
+        id: "8",
+        key: "permissions",
+        title: "Permission",
+        icon: "Lock",
+        roles: ["admin"],
+        path: "/permissions",
+      },
       {
         id: "3",
         key: "3",
@@ -80,6 +153,7 @@ export async function GET() {
         badge: "",
         roles: ["admin", "develop", "manager"],
       },
+
       {
         id: "5",
         key: "5",

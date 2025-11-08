@@ -1,7 +1,7 @@
 "use client";
 
-import LayoutTop from "#/components/layout/layout-top";
-import LayoutMix from "#/components/layout/layout-mix";
-import LayoutSide from "#/components/layout/layout-side";
+import LayoutTop from "./layout-top";
+import LayoutMix from "./layout-mix";
+import LayoutSide from "./layout-side";
 
 export { LayoutTop, LayoutMix, LayoutSide };
