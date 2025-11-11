@@ -1,4 +1,6 @@
-import { NextResponse } from "next/server";
+import { createRole, getRoleList } from "#/db/repositories/roleRepo";
+
+import { fail, success } from "../utils";
 
 // mock 角色数据
 let roles = [
@@ -22,19 +24,31 @@ let roles = [
   },
 ];
 
-// GET /api/roles
+// // GET /api/roles
+// export async function GET() {
+//   // return NextResponse.json({ code: 0, data: roles });
+//   const roles = await getRoleList();
+//   return NextResponse.json({ code: 0, data: roles });
+// }
+
+// export async function POST(req: Request) {
+//   const body = await req.json();
+//   const newRole = await createRole(body);
+//   return NextResponse.json({
+//     code: 0,
+//     message: "success",
+//     data: newRole,
+//   });
+// }
+
 export async function GET() {
-  return NextResponse.json({ code: 0, data: roles });
+  const list = await getRoleList();
+  return success(list);
 }
 
-// POST /api/roles
 export async function POST(req: Request) {
   const body = await req.json();
-  const newRole = { id: Date.now(), ...body };
-  roles.push(newRole);
-  return NextResponse.json({
-    code: 0,
-    message: "success",
-    data: newRole,
-  });
+  if (!body.name) return fail("角色名称不能为空");
+  const created = await createRole(body);
+  return success(created);
 }

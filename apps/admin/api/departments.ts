@@ -1,13 +1,8 @@
-import { request } from "./request";
+// import { request } from "./request";
 
-export interface Department {
-  id: number;
-  name: string;
-  manager?: string;
-  children?: Department[];
-}
+import { api } from "./request";
 
 // 获取部门信息
-export async function fetchDepartments(): Promise<Department[]> {
-  return request<Department[]>("/api/departments");
+export async function fetchDepartments() {
+  return await api.get("/api/departments");
 }
